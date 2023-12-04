@@ -10,7 +10,7 @@ let User = function (model) {
   this.updatedAt = model.updatedAt;
   this.createdAt = model.createdAt;
   this.userPassword = model.userPassword;
-  this.isAdmin = model.iaAdmin;
+  this.isAdmin = model.isAdmin;
 };
 
 User.saveUser = (m, result) => {
