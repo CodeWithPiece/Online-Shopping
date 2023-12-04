@@ -58,11 +58,19 @@ exports.updateUser = (req, res) => {
         user: null,
       });
     } else {
-      return res.status(200).json({
-        status: true,
-        message: "User updated successfully...!!",
-        user: user,
-      });
+      if (user == null) {
+        return res.status(200).json({
+          status: true,
+          message: "User not found...!!",
+          user: user,
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          message: "User updated successfully...!!",
+          user: user,
+        });
+      }
     }
   });
 };
@@ -77,10 +85,53 @@ exports.getUserById = (req, res) => {
         user: null,
       });
     } else {
+      if (user == null) {
+        return res.status(200).json({
+          status: true,
+          message: "User not found...!!",
+          user: user,
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          message: "User Details",
+          user: user,
+        });
+      }
+    }
+  });
+};
+
+exports.deleteUserById = (req, res) => {
+  let userId = req.body.userId;
+  userModel.deleteUserById(userId, (err, user) => {
+    if (err) {
+      return res.status(400).json({
+        status: false,
+        message: "Internal server error",
+      });
+    } else {
       return res.status(200).json({
         status: true,
-        message: "User Details",
-        user: user,
+        message: "User delete successfully...!!",
+      });
+    }
+  });
+};
+
+exports.getUsers = (req, res) => {
+  userModel.getUsers((err, users) => {
+    if (err) {
+      return res.status(400).json({
+        status: false,
+        message: "Internal server error",
+        users: [],
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        message: "Available Users",
+        users: users,
       });
     }
   });

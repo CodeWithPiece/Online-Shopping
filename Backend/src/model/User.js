@@ -42,7 +42,11 @@ User.updateUser = (m, result) => {
             if (err) {
               return result(err, null);
             } else {
-              return result(null, res[0]);
+              if (res && res.length) {
+                return result(null, res[0]);
+              } else {
+                return result(null, null);
+              }
             }
           }
         );
@@ -59,10 +63,41 @@ User.getUserById = (userId, result) => {
       if (err) {
         return result(err, null);
       } else {
-        if (res[0]) {
+        if (res && res.length) {
           return result(null, res[0]);
         } else {
           return result(null, null);
+        }
+      }
+    }
+  );
+};
+
+User.deleteUserById = (userId, result) => {
+  connection.query(
+    "DELETE FROM online_shopping.users WHERE userId=?",
+    [userId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        return result(null, res);
+      }
+    }
+  );
+};
+
+User.getUsers = (result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.users ORDER BY userId DESC",
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          return result(null, res);
+        } else {
+          return result(null, []);
         }
       }
     }
