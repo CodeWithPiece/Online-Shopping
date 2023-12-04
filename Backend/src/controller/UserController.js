@@ -22,3 +22,66 @@ exports.saveUser = (req, res) => {
     }
   });
 };
+
+exports.updateUser = (req, res) => {
+  var m = {
+    userId: req.body.userId,
+    userName: req.body.userName,
+    userEmail: req.body.userEmail,
+    userAddress: req.body.userAddress,
+    updatedAt: getDateTime(),
+  };
+
+  function getDateTime() {
+    let date = new Date();
+    let Str =
+      date.getFullYear() +
+      "-" +
+      ("00" + (date.getMonth() + 1)).slice(-2) +
+      "-" +
+      ("00" + date.getDate()).slice(-2) +
+      " " +
+      ("00" + date.getHours()).slice(-2) +
+      ":" +
+      ("00" + date.getMinutes()).slice(-2) +
+      ":" +
+      ("00" + date.getSeconds()).slice(-2);
+
+    return Str;
+  }
+
+  userModel.updateUser(m, (err, user) => {
+    if (err) {
+      return res.status(400).json({
+        status: false,
+        message: "Internal server error",
+        user: null,
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        message: "User updated successfully...!!",
+        user: user,
+      });
+    }
+  });
+};
+
+exports.getUserById = (req, res) => {
+  let userId = req.body.userId;
+  userModel.getUserById(userId, (err, user) => {
+    if (err) {
+      return res.status(400).json({
+        status: false,
+        message: "Internal server error",
+        user: null,
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        message: "User Details",
+        user: user,
+      });
+    }
+  });
+};

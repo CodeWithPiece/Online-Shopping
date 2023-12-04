@@ -27,4 +27,46 @@ User.saveUser = (m, result) => {
   );
 };
 
+User.updateUser = (m, result) => {
+  connection.query(
+    "UPDATE online_shopping.users SET userName=? , userEmail=? , userAddress=?, updatedAt=? WHERE userId=?",
+    [m.userName, m.userEmail, m.userAddress, m.updatedAt, m.userId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        connection.query(
+          "SELECT * FROM online_shopping.users WHERE userId=?",
+          [m.userId],
+          (err, res) => {
+            if (err) {
+              return result(err, null);
+            } else {
+              return result(null, res[0]);
+            }
+          }
+        );
+      }
+    }
+  );
+};
+
+User.getUserById = (userId, result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.users WHERE userId=?",
+    [userId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res[0]) {
+          return result(null, res[0]);
+        } else {
+          return result(null, null);
+        }
+      }
+    }
+  );
+};
+
 module.exports = User;
