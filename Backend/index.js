@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const upload = require("express-fileupload");
 const bodyparse = require("body-parser");
+const connection = require("./db_connection/DbConnection");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.SERVER_PORT;
