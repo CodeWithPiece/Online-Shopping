@@ -48,25 +48,25 @@ exports.updateCategory = (req, res) => {
     return Str;
   }
 
-  productModel.updateCategory(m, (err, user) => {
+  productModel.updateCategory(m, (err, category) => {
     if (err) {
       return res.status(500).json({
         status: false,
         message: "Internal server error",
-        user: null,
+        category: null,
       });
     } else {
-      if (user == null) {
+      if (category == null) {
         return res.status(404).json({
           status: true,
-          message: "User not found...!!",
-          user: user,
+          message: "Category not found...!!",
+          category: category,
         });
       } else {
         return res.status(200).json({
           status: true,
-          message: "User updated successfully...!!",
-          user: user,
+          message: "Category updated successfully...!!",
+          category: category,
         });
       }
     }

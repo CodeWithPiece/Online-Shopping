@@ -90,3 +90,29 @@ exports.addCategoryValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.updateCategoryValidate = (req, res, next) => {
+  try {
+    if (!req.body.catId) {
+      return res.status(400).json({
+        status: false,
+        message: "Unauthorized user...",
+      });
+    }
+    if (!req.body.userId) {
+      return res.status(400).json({
+        status: false,
+        message: "Unauthorized user...",
+      });
+    }
+    if (!req.body.catName) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter category name...",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};

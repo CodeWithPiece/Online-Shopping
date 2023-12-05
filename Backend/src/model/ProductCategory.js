@@ -50,4 +50,22 @@ ProductCategory.updateCategory = (m, result) => {
   );
 };
 
+ProductCategory.getCatById = (catId, result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.product_category WHERE catId=?",
+    [catId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          return result(null, res[0]);
+        } else {
+          return result(null, null);
+        }
+      }
+    }
+  );
+};
+
 module.exports = ProductCategory;

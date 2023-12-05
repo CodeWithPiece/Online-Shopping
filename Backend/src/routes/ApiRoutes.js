@@ -11,5 +11,6 @@ router.post("/user/delete", Validate.getByIdValidate, UserController.deleteUserB
 router.get("/users", UserController.getUsers);
 
 router.post("/category/create", Validate.addCategoryValidate, ProductController.saveCategory);
+router.post("/category/update", Validate.updateCategoryValidate, ProductController.updateCategory);
 
 module.exports = router;
