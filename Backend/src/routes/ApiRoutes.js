@@ -12,5 +12,6 @@ router.get("/users", UserController.getUsers);
 
 router.post("/category/create", Validate.addCategoryValidate, ProductController.saveCategory);
 router.post("/category/update", Validate.updateCategoryValidate, ProductController.updateCategory);
+router.post("/category/get", Validate.getCatByIdValidate, ProductController.getCatById);
 
 module.exports = router;

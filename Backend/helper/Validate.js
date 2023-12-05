@@ -116,3 +116,18 @@ exports.updateCategoryValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.getCatByIdValidate = (req, res, next) => {
+  try {
+    if (!req.body.catId) {
+      return res.status(400).json({
+        status: false,
+        message: "Unauthorized user...",
+        user: null,
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
