@@ -3,31 +3,31 @@ exports.registerValidate = (req, res, next) => {
     if (!req.body.userName) {
       return res.status(400).json({
         status: false,
-        message: "Please Enter Name",
+        message: "Please enter name",
       });
     }
     if (!req.body.userNumber) {
       return res.status(400).json({
         status: false,
-        message: "Please Enter Email",
+        message: "Please enter email",
       });
     }
     if (!req.body.userEmail) {
       return res.status(400).json({
         status: false,
-        message: "Please Enter Email",
+        message: "Please enter email",
       });
     }
     if (!req.body.userAddress) {
       return res.status(400).json({
         status: false,
-        message: "Please Enter Address",
+        message: "Please enter address",
       });
     }
     if (!req.body.userPassword) {
       return res.status(400).json({
         status: false,
-        message: "Please Enter Password",
+        message: "Please enter password",
       });
     }
     next();
@@ -41,19 +41,19 @@ exports.updateValidate = (req, res, next) => {
     if (!req.body.userName) {
       return res.status(400).json({
         status: false,
-        message: "Please Enter Name",
+        message: "Please enter name",
       });
     }
     if (!req.body.userEmail) {
       return res.status(400).json({
         status: false,
-        message: "Please Enter Email",
+        message: "Please enter email",
       });
     }
     if (!req.body.userAddress) {
       return res.status(400).json({
         status: false,
-        message: "Please Enter Address",
+        message: "Please enter address",
       });
     }
     next();
@@ -68,7 +68,21 @@ exports.getByIdValidate = (req, res, next) => {
       return res.status(400).json({
         status: false,
         message: "Unauthorized user...",
-        user: null
+        user: null,
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.addCategoryValidate = (req, res, next) => {
+  try {
+    if (!req.body.catName) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter category name...",
       });
     }
     next();

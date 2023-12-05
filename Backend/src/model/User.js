@@ -1,4 +1,4 @@
-const connection = require("../../db_connection/DbConnection");
+const connection = require("../../db_connection/DbConnection.js");
 
 let User = function (model) {
   this.userId = model.userId;

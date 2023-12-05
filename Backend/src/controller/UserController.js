@@ -10,7 +10,7 @@ exports.saveUser = (req, res) => {
   };
   userModel.saveUser(m, (err, user) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: false,
         message: "Internal server error",
       });
@@ -52,14 +52,14 @@ exports.updateUser = (req, res) => {
 
   userModel.updateUser(m, (err, user) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: false,
         message: "Internal server error",
         user: null,
       });
     } else {
       if (user == null) {
-        return res.status(200).json({
+        return res.status(404).json({
           status: true,
           message: "User not found...!!",
           user: user,
@@ -79,14 +79,14 @@ exports.getUserById = (req, res) => {
   let userId = req.body.userId;
   userModel.getUserById(userId, (err, user) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: false,
         message: "Internal server error",
         user: null,
       });
     } else {
       if (user == null) {
-        return res.status(200).json({
+        return res.status(404).json({
           status: true,
           message: "User not found...!!",
           user: user,
@@ -106,7 +106,7 @@ exports.deleteUserById = (req, res) => {
   let userId = req.body.userId;
   userModel.deleteUserById(userId, (err, user) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: false,
         message: "Internal server error",
       });
@@ -122,7 +122,7 @@ exports.deleteUserById = (req, res) => {
 exports.getUsers = (req, res) => {
   userModel.getUsers((err, users) => {
     if (err) {
-      return res.status(400).json({
+      return res.status(500).json({
         status: false,
         message: "Internal server error",
         users: [],
