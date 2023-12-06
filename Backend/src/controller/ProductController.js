@@ -101,7 +101,8 @@ exports.getCatById = (req, res) => {
 };
 
 exports.getCategory = (req, res) => {
-  productCategory.getCategory((err, category) => {
+  let userId = req.body.userId;
+  productCategory.getCategory(userId, (err, category) => {
     if (err) {
       return res.status(500).json({
         status: false,
@@ -109,11 +110,20 @@ exports.getCategory = (req, res) => {
         category: [],
       });
     } else {
-      return res.status(200).json({
-        status: true,
-        message: "Available Categoried...!!",
-        category: category,
-      });
+      console.log(category);
+      if (category.length == 0) {
+        return res.status(404).json({
+          status: false,
+          message: "No categories found...!!",
+          category: category,
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          message: "Available categories...!!",
+          category: category,
+        });
+      }
     }
   });
 };

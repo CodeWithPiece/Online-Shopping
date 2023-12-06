@@ -68,9 +68,10 @@ ProductCategory.getCatById = (catId, result) => {
   );
 };
 
-ProductCategory.getCategory = (result) => {
+ProductCategory.getCategory = (userId, result) => {
   connection.query(
-    "SELECT * FROM online_shopping.product_category ORDER BY catId DESC",
+    "SELECT online_shopping.product_category.catId, online_shopping.product_category.catName, online_shopping.product_category.updatedAt, online_shopping.product_category.createdAt FROM online_shopping.product_category INNER JOIN online_shopping.users ON online_shopping.product_category.userId = online_shopping.users.userId WHERE online_shopping.product_category.userId=? ORDER BY online_shopping.product_category.catId DESC",
+    [userId],
     (err, res) => {
       if (err) {
         return result(err, null);

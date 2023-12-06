@@ -13,6 +13,6 @@ router.get("/user/all", UserController.getUsers);
 router.post("/category/create", Validate.addCategoryValidate, ProductController.saveCategory);
 router.post("/category/update", Validate.updateCategoryValidate, ProductController.updateCategory);
 router.post("/category/get", Validate.getCatByIdValidate, ProductController.getCatById);
-router.get("/category/all", ProductController.getCategory);
+router.post("/category/all", Validate.getByUserIdValidate, ProductController.getCategory);
 
 module.exports = router;
