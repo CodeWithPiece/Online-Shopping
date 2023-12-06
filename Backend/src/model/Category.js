@@ -1,6 +1,6 @@
 const connection = require("../../db_connection/DbConnection.js");
 
-let ProductCategory = function (model) {
+let Category = function (model) {
   this.catId = model.catId;
   this.catName = model.catName;
   this.userId = model.userId;
@@ -8,7 +8,7 @@ let ProductCategory = function (model) {
   this.createdAt = model.createdAt;
 };
 
-ProductCategory.saveCategory = (m, result) => {
+Category.saveCategory = (m, result) => {
   connection.query(
     "INSERT INTO online_shopping.product_category (catName, userId) values(?,?)",
     [m.catName, m.userId],
@@ -22,7 +22,7 @@ ProductCategory.saveCategory = (m, result) => {
   );
 };
 
-ProductCategory.updateCategory = (m, result) => {
+Category.updateCategory = (m, result) => {
   connection.query(
     "UPDATE online_shopping.product_category SET catName=?, userId=? , updatedAt=? WHERE catId=?",
     [m.catName, m.userId, m.updatedAt, m.catId],
@@ -50,7 +50,7 @@ ProductCategory.updateCategory = (m, result) => {
   );
 };
 
-ProductCategory.getCatById = (catId, result) => {
+Category.getCatById = (catId, result) => {
   connection.query(
     "SELECT * FROM online_shopping.product_category WHERE catId=?",
     [catId],
@@ -68,7 +68,7 @@ ProductCategory.getCatById = (catId, result) => {
   );
 };
 
-ProductCategory.getCategoryByUserId = (userId, result) => {
+Category.getCategoryByUserId = (userId, result) => {
   connection.query(
     "SELECT online_shopping.product_category.catId, online_shopping.product_category.catName, online_shopping.product_category.updatedAt, online_shopping.product_category.createdAt FROM online_shopping.product_category INNER JOIN online_shopping.users ON online_shopping.product_category.userId = online_shopping.users.userId WHERE online_shopping.product_category.userId=? ORDER BY online_shopping.product_category.catId DESC",
     [userId],
@@ -86,7 +86,7 @@ ProductCategory.getCategoryByUserId = (userId, result) => {
   );
 };
 
-ProductCategory.deleteCatById = (m, result) => {
+Category.deleteCatById = (m, result) => {
   connection.query(
     "SELECT * FROM online_shopping.users WHERE userId=?",
     [m.userId],
@@ -120,7 +120,7 @@ ProductCategory.deleteCatById = (m, result) => {
   );
 };
 
-ProductCategory.getCategory = (result) => {
+Category.getCategory = (result) => {
   connection.query(
     "SELECT * FROM online_shopping.product_category ORDER BY online_shopping.product_category.catId DESC",
     (err, res) => {
@@ -137,4 +137,4 @@ ProductCategory.getCategory = (result) => {
   );
 };
 
-module.exports = ProductCategory;
+module.exports = Category;

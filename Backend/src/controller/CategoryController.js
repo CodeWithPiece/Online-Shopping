@@ -1,4 +1,4 @@
-const productCategory = require("../model/Category.js");
+const categoryModel = require("../model/Category.js");
 
 exports.saveCategory = (req, res) => {
   let m = {
@@ -6,7 +6,7 @@ exports.saveCategory = (req, res) => {
     userId: req.body.userId,
   };
 
-  productCategory.saveCategory(m, (err, category) => {
+  categoryModel.saveCategory(m, (err, category) => {
     console.log(err);
     if (err) {
       return res.status(500).json({
@@ -48,7 +48,7 @@ exports.updateCategory = (req, res) => {
     return Str;
   }
 
-  productCategory.updateCategory(m, (err, category) => {
+  categoryModel.updateCategory(m, (err, category) => {
     if (err) {
       return res.status(500).json({
         status: false,
@@ -75,7 +75,7 @@ exports.updateCategory = (req, res) => {
 
 exports.getCatById = (req, res) => {
   let catId = req.body.catId;
-  productCategory.getCatById(catId, (err, category) => {
+  categoryModel.getCatById(catId, (err, category) => {
     if (err) {
       return res.status(500).json({
         status: false,
@@ -101,7 +101,7 @@ exports.getCatById = (req, res) => {
 };
 
 exports.getCategory = (req, res) => {
-  productCategory.getCategory((err, category) => {
+  categoryModel.getCategory((err, category) => {
     if (err) {
       console.log(err);
       return res.status(500).json({
@@ -121,7 +121,7 @@ exports.getCategory = (req, res) => {
 
 exports.getCategoryByUserId = (req, res) => {
   let userId = req.body.userId;
-  productCategory.getCategoryByUserId(userId, (err, category) => {
+  categoryModel.getCategoryByUserId(userId, (err, category) => {
     if (err) {
       return res.status(500).json({
         status: false,
@@ -151,7 +151,7 @@ exports.deleteCatById = (req, res) => {
     userId: req.body.userId,
     catId: req.body.catId,
   };
-  productCategory.deleteCatById(m, (err, category) => {
+  categoryModel.deleteCatById(m, (err, category) => {
     if (err) {
       console.log(err);
       return res.status(500).json({

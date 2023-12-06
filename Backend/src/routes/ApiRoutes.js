@@ -3,6 +3,7 @@ const router = express.Router();
 const Validate = require("../../helper/Validate.js");
 const UserController = require("../controller/UserController.js");
 const CategoryController = require("../controller/CategoryController.js");
+const ProductController = require("../controller/ProductController.js");
 
 router.post("/user/create", Validate.registerValidate, UserController.saveUser);
 router.post("/user/update", Validate.updateValidate, UserController.updateUser);
@@ -16,5 +17,7 @@ router.post("/category/get", Validate.getCatByIdValidate, CategoryController.get
 router.get("/category/all", CategoryController.getCategory);
 router.post("/category/user", Validate.getByUserIdValidate, CategoryController.getCategoryByUserId);
 router.post("/category/delete", Validate.deleteCategoryValidate, CategoryController.deleteCatById);
+
+router.post("/product/create", Validate.addProductValidate, ProductController.saveProduct);
 
 module.exports = router;
