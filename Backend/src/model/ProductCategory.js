@@ -68,4 +68,21 @@ ProductCategory.getCatById = (catId, result) => {
   );
 };
 
+ProductCategory.getCategory = (result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.product_category ORDER BY catId DESC",
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          return result(null, res);
+        } else {
+          return result(null, []);
+        }
+      }
+    }
+  );
+};
+
 module.exports = ProductCategory;

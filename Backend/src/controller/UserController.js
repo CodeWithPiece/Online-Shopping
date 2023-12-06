@@ -130,7 +130,7 @@ exports.getUsers = (req, res) => {
     } else {
       return res.status(200).json({
         status: true,
-        message: "Available Users",
+        message: "Available Users...!!",
         users: users,
       });
     }

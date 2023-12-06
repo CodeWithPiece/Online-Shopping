@@ -1,4 +1,4 @@
-const productModel = require("../model/ProductCategory.js");
+const productCategory = require("../model/ProductCategory.js");
 
 exports.saveCategory = (req, res) => {
   var m = {
@@ -6,7 +6,7 @@ exports.saveCategory = (req, res) => {
     userId: req.body.userId,
   };
 
-  productModel.saveCategory(m, (err, category) => {
+  productCategory.saveCategory(m, (err, category) => {
     console.log(err);
     if (err) {
       return res.status(500).json({
@@ -48,7 +48,7 @@ exports.updateCategory = (req, res) => {
     return Str;
   }
 
-  productModel.updateCategory(m, (err, category) => {
+  productCategory.updateCategory(m, (err, category) => {
     if (err) {
       return res.status(500).json({
         status: false,
@@ -75,7 +75,7 @@ exports.updateCategory = (req, res) => {
 
 exports.getCatById = (req, res) => {
   let catId = req.body.catId;
-  productModel.getCatById(catId, (err, category) => {
+  productCategory.getCatById(catId, (err, category) => {
     if (err) {
       return res.status(500).json({
         status: false,
@@ -96,6 +96,24 @@ exports.getCatById = (req, res) => {
           category: category,
         });
       }
+    }
+  });
+};
+
+exports.getCategory = (req, res) => {
+  productCategory.getCategory((err, category) => {
+    if (err) {
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+        category: [],
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        message: "Available Categoried...!!",
+        category: category,
+      });
     }
   });
 };
