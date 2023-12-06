@@ -1,7 +1,7 @@
 const userModel = require("../model/User.js");
 
 exports.saveUser = (req, res) => {
-  var m = {
+  let m = {
     userName: req.body.userName,
     userNumber: req.body.userNumber,
     userEmail: req.body.userEmail,
@@ -24,7 +24,7 @@ exports.saveUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  var m = {
+  let m = {
     userId: req.body.userId,
     userName: req.body.userName,
     userEmail: req.body.userEmail,

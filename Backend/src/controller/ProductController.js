@@ -1,7 +1,7 @@
 const productCategory = require("../model/ProductCategory.js");
 
 exports.saveCategory = (req, res) => {
-  var m = {
+  let m = {
     catName: req.body.catName,
     userId: req.body.userId,
   };
@@ -23,7 +23,7 @@ exports.saveCategory = (req, res) => {
 };
 
 exports.updateCategory = (req, res) => {
-  var m = {
+  let m = {
     catName: req.body.catName,
     userId: req.body.userId,
     catId: req.body.catId,
@@ -92,7 +92,7 @@ exports.getCatById = (req, res) => {
       } else {
         return res.status(200).json({
           status: true,
-          message: "Category Details...!!",
+          message: "Category details...!!",
           category: category,
         });
       }
@@ -101,8 +101,27 @@ exports.getCatById = (req, res) => {
 };
 
 exports.getCategory = (req, res) => {
+  productCategory.getCategory((err, category) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+        category: [],
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        message: "Available categories...!!",
+        category: category,
+      });
+    }
+  });
+};
+
+exports.getCategoryByUserId = (req, res) => {
   let userId = req.body.userId;
-  productCategory.getCategory(userId, (err, category) => {
+  productCategory.getCategoryByUserId(userId, (err, category) => {
     if (err) {
       return res.status(500).json({
         status: false,
@@ -110,7 +129,6 @@ exports.getCategory = (req, res) => {
         category: [],
       });
     } else {
-      console.log(category);
       if (category.length == 0) {
         return res.status(404).json({
           status: false,
@@ -122,6 +140,34 @@ exports.getCategory = (req, res) => {
           status: true,
           message: "Available categories...!!",
           category: category,
+        });
+      }
+    }
+  });
+};
+
+exports.deleteCatById = (req, res) => {
+  let m = {
+    userId: req.body.userId,
+    catId: req.body.catId,
+  };
+  productCategory.deleteCatById(m, (err, category) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+      });
+    } else {
+      if (category === "Unauthorized") {
+        return res.status(400).json({
+          status: false,
+          message: "Unauthorized user...!!",
+        });
+      } else if (category === "Deleted") {
+        return res.status(200).json({
+          status: false,
+          message: "Category deleted successfully...!!",
         });
       }
     }

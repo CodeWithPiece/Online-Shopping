@@ -85,6 +85,12 @@ exports.addCategoryValidate = (req, res, next) => {
         message: "Enter category name...",
       });
     }
+    if (!req.body.userId) {
+      return res.status(400).json({
+        status: false,
+        message: "Unauthorised user...",
+      });
+    }
     next();
   } catch (error) {
     console.log(error);
@@ -139,6 +145,26 @@ exports.getByUserIdValidate = (req, res, next) => {
         status: false,
         message: "Unauthorized user...",
         category: [],
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.deleteCategoryValidate = (req, res, next) => {
+  try {
+    if (!req.body.catId) {
+      return res.status(400).json({
+        status: false,
+        message: "Unauthorised user...",
+      });
+    }
+    if (!req.body.userId) {
+      return res.status(400).json({
+        status: false,
+        message: "Unauthorised user...",
       });
     }
     next();

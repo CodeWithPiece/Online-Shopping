@@ -68,10 +68,61 @@ ProductCategory.getCatById = (catId, result) => {
   );
 };
 
-ProductCategory.getCategory = (userId, result) => {
+ProductCategory.getCategoryByUserId = (userId, result) => {
   connection.query(
     "SELECT online_shopping.product_category.catId, online_shopping.product_category.catName, online_shopping.product_category.updatedAt, online_shopping.product_category.createdAt FROM online_shopping.product_category INNER JOIN online_shopping.users ON online_shopping.product_category.userId = online_shopping.users.userId WHERE online_shopping.product_category.userId=? ORDER BY online_shopping.product_category.catId DESC",
     [userId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          return result(null, res);
+        } else {
+          return result(null, []);
+        }
+      }
+    }
+  );
+};
+
+ProductCategory.deleteCatById = (m, result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.users WHERE userId=?",
+    [m.userId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          const user = res[0];
+          console.log(user.isAdmin);
+          if (user.isAdmin === 1) {
+            connection.query(
+              "DELETE FROM online_shopping.product_category WHERE catId=?",
+              [m.catId],
+              (err, res) => {
+                if (err) {
+                  return result(err, null);
+                } else {
+                  return result(null, "Deleted");
+                }
+              }
+            );
+          } else {
+            return result(null, "Unauthorized");
+          }
+        } else {
+          return result(null, "Unauthorized");
+        }
+      }
+    }
+  );
+};
+
+ProductCategory.getCategory = (result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.product_category ORDER BY online_shopping.product_category.catId DESC",
     (err, res) => {
       if (err) {
         return result(err, null);
