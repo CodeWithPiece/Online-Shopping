@@ -19,5 +19,10 @@ router.post("/category/user", Validate.getByUserIdValidate, CategoryController.g
 router.post("/category/delete", Validate.deleteCategoryValidate, CategoryController.deleteCatById);
 
 router.post("/product/create", Validate.addProductValidate, ProductController.saveProduct);
+router.post("/product/update", Validate.updateProductValidate, ProductController.updateProduct);
+router.post("/product/get", Validate.getProductByIdValidate, ProductController.getProductById);
+router.post("/product/category", Validate.getProductByCatValidate, ProductController.getProductByCategory);
+router.get("/product/all", ProductController.getProduct);
+router.post("/product/delete", Validate.deleteProductValidate, ProductController.deleteProductById);
 
 module.exports = router;

@@ -68,6 +68,23 @@ Category.getCatById = (catId, result) => {
   );
 };
 
+Category.getCategory = (result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.product_category ORDER BY catId DESC",
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          return result(null, res);
+        } else {
+          return result(null, []);
+        }
+      }
+    }
+  );
+};
+
 Category.getCategoryByUserId = (userId, result) => {
   connection.query(
     "SELECT online_shopping.product_category.catId, online_shopping.product_category.catName, online_shopping.product_category.updatedAt, online_shopping.product_category.createdAt FROM online_shopping.product_category INNER JOIN online_shopping.users ON online_shopping.product_category.userId = online_shopping.users.userId WHERE online_shopping.product_category.userId=? ORDER BY online_shopping.product_category.catId DESC",
@@ -114,23 +131,6 @@ Category.deleteCatById = (m, result) => {
           }
         } else {
           return result(null, "Unauthorized");
-        }
-      }
-    }
-  );
-};
-
-Category.getCategory = (result) => {
-  connection.query(
-    "SELECT * FROM online_shopping.product_category ORDER BY online_shopping.product_category.catId DESC",
-    (err, res) => {
-      if (err) {
-        return result(err, null);
-      } else {
-        if (res && res.length) {
-          return result(null, res);
-        } else {
-          return result(null, []);
         }
       }
     }

@@ -210,3 +210,95 @@ exports.addProductValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.updateProductValidate = (req, res, next) => {
+  try {
+    if (!req.body.productName) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product name...",
+      });
+    }
+    if (!req.body.productDesc) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product description...",
+      });
+    }
+    if (!req.body.productPrice) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product price...",
+      });
+    }
+    if (!req.body.productRating) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product rating...",
+      });
+    }
+    if (!req.body.catId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product category...",
+      });
+    }
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getProductByIdValidate = (req, res, next) => {
+  try {
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getProductByCatValidate = (req, res, next) => {
+  try {
+    if (!req.body.catId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter category id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.deleteProductValidate = (req, res, next) => {
+  try {
+    if (!req.body.userId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter user id...!!",
+      });
+    }
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};

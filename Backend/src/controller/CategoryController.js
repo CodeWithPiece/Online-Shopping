@@ -58,7 +58,7 @@ exports.updateCategory = (req, res) => {
     } else {
       if (category == null) {
         return res.status(404).json({
-          status: true,
+          status: false,
           message: "Category not found...!!",
           category: category,
         });
@@ -85,7 +85,7 @@ exports.getCatById = (req, res) => {
     } else {
       if (category == null) {
         return res.status(404).json({
-          status: true,
+          status: false,
           message: "Category not found...!!",
           category: category,
         });
@@ -103,7 +103,6 @@ exports.getCatById = (req, res) => {
 exports.getCategory = (req, res) => {
   categoryModel.getCategory((err, category) => {
     if (err) {
-      console.log(err);
       return res.status(500).json({
         status: false,
         message: "Internal server error",
