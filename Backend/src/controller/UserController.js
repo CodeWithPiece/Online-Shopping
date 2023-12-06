@@ -106,6 +106,7 @@ exports.deleteUserById = (req, res) => {
   let userId = req.body.userId;
   userModel.deleteUserById(userId, (err, user) => {
     if (err) {
+      console.log(err);
       return res.status(500).json({
         status: false,
         message: "Internal server error",

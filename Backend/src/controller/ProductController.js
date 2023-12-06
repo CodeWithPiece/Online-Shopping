@@ -50,6 +50,7 @@ exports.updateCategory = (req, res) => {
 
   productCategory.updateCategory(m, (err, category) => {
     if (err) {
+      console.log(err);
       return res.status(500).json({
         status: false,
         message: "Internal server error",
@@ -166,7 +167,7 @@ exports.deleteCatById = (req, res) => {
         });
       } else if (category === "Deleted") {
         return res.status(200).json({
-          status: false,
+          status: true,
           message: "Category deleted successfully...!!",
         });
       }
