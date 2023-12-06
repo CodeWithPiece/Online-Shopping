@@ -1,4 +1,4 @@
-const productCategory = require("../model/ProductCategory.js");
+const productCategory = require("../model/Category.js");
 
 exports.saveCategory = (req, res) => {
   let m = {
@@ -50,7 +50,6 @@ exports.updateCategory = (req, res) => {
 
   productCategory.updateCategory(m, (err, category) => {
     if (err) {
-      console.log(err);
       return res.status(500).json({
         status: false,
         message: "Internal server error",
