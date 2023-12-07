@@ -7,11 +7,15 @@
     <item
         android:id="@+id/category"
         android:icon="@drawable/category_selector"
-        android:title="Notes" />
+        android:title="Category" />
+    <item
+        android:id="@+id/favourite"
+        android:icon="@drawable/favourite_selector"
+        android:title="Favourite" />
     <item
         android:id="@+id/cart"
         android:icon="@drawable/cart_selector"
-        android:title="Attendance" />
+        android:title="My Cart" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/profile_selector"
