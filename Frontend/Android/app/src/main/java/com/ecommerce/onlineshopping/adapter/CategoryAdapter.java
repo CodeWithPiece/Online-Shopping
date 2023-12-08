@@ -16,7 +16,7 @@ import com.ecommerce.onlineshopping.views.fragment.HomeFragment;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     CategoryFragment categoryFragment;
-    int rowIndex = -1;
+    int rowIndex = 0;
 
     public CategoryAdapter(CategoryFragment categoryFragment) {
         this.categoryFragment = categoryFragment;
