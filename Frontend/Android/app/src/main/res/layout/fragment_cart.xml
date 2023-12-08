@@ -25,8 +25,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolBar"
-        android:paddingBottom="80dp">
+        android:layout_below="@+id/toolBar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -154,6 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:layout_marginBottom="80dp"
                     android:fontFamily="@font/quantify"
                     android:padding="16dp"
                     android:text="Proceed to checkout"
