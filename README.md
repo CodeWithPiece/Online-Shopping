@@ -1,2 +1,1 @@
-# Online-Shopping
- Online Shooping app using node and react js and android studio
+<h1 align="left">Online Shopping App</h1>
