@@ -4,6 +4,7 @@ const Validate = require("../../helper/Validate.js");
 const UserController = require("../controller/UserController.js");
 const CategoryController = require("../controller/CategoryController.js");
 const ProductController = require("../controller/ProductController.js");
+const ProductImageController = require("../controller/ProductImageController.js");
 
 router.post("/user/create", Validate.registerValidate, UserController.saveUser);
 router.post("/user/update", Validate.updateValidate, UserController.updateUser);
@@ -24,5 +25,10 @@ router.post("/product/get", Validate.getProductByIdValidate, ProductController.g
 router.post("/product/category", Validate.getProductByCatValidate, ProductController.getProductByCategory);
 router.get("/product/all", ProductController.getProduct);
 router.post("/product/delete", Validate.deleteProductValidate, ProductController.deleteProductById);
+
+router.post("/image/create", Validate.addImageValidate, ProductImageController.saveProductImage);
+router.post("/image/update", Validate.updateImageValidate, ProductImageController.updateProductImage);
+router.post("/image/get", Validate.getImageValidate, ProductImageController.getImageByProductId);
+router.post("/image/delete", Validate.deleteImageValidate, ProductImageController.deleteImageById);
 
 module.exports = router;

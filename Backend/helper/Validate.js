@@ -302,3 +302,84 @@ exports.deleteProductValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.addImageValidate = (req, res, next) => {
+  try {
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).json({
+        status: false,
+        message: "Image required...!!",
+      });
+    }
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.updateImageValidate = (req, res, next) => {
+  try {
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).json({
+        status: false,
+        message: "Image required...!!",
+      });
+    }
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product id...!!",
+      });
+    }
+    if (!req.body.imageId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter image id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.getImageValidate = (req, res, next) => {
+  try {
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.deleteImageValidate = (req, res, next) => {
+  try {
+    if (!req.body.userId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter user id...!!",
+      });
+    }
+    if (!req.body.imageId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter image id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+

@@ -5,9 +5,7 @@ exports.saveCategory = (req, res) => {
     catName: req.body.catName,
     userId: req.body.userId,
   };
-
   categoryModel.saveCategory(m, (err, category) => {
-    console.log(err);
     if (err) {
       return res.status(500).json({
         status: false,
@@ -29,7 +27,6 @@ exports.updateCategory = (req, res) => {
     catId: req.body.catId,
     updatedAt: getDateTime(),
   };
-
   function getDateTime() {
     let date = new Date();
     let Str =

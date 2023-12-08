@@ -113,7 +113,6 @@ Category.deleteCatById = (m, result) => {
       } else {
         if (res && res.length) {
           const user = res[0];
-          console.log(user.isAdmin);
           if (user.isAdmin === 1) {
             connection.query(
               "DELETE FROM online_shopping.product_category WHERE catId=?",
