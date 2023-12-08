@@ -30,7 +30,7 @@
     </style>
 
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:fontFamily">@font/fabulous</item>
+        <item name="android:fontFamily">@font/raglika</item>
     </style>
 
 </resources>
