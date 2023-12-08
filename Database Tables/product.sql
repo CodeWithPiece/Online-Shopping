@@ -15,7 +15,7 @@ DROP TABLE online_shopping.product;
 TRUNCATE TABLE online_shopping.product;
 ALTER TABLE product MODIFY COLUMN productRating varchar(255) NOT NULL;
 INSERT INTO online_shopping.product (productName, productDesc, productPrice, productRating, catId) VALUES ("Shirt", "Casual Shirt", 100.50, 4.5, 7);
-SELECT * FROM online_shopping.product ORDER BY online_shopping.product.productId DESC;
+SELECT * FROM online_shopping.product ORDER BY productId DESC;
 UPDATE online_shopping.product SET productName="Shirt", productDesc="Casual Shirt", productPrice="233",
 productRating="4.5" , catId=7 , updatedAt=CURRENT_TIMESTAMP() WHERE productId=2;
 
