@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.ecommerce.onlineshopping.R;
 import com.google.android.material.button.MaterialButton;
@@ -39,6 +40,7 @@ public class OrderPlacedActivity extends AppCompatActivity {
         drawableShape = new Shape.DrawableShape(drawable, true, true);
         konfettiView = findViewById(R.id.konfettiView);
         MaterialButton btnViewOrder = findViewById(R.id.btnViewOrder);
+        TextView btnHome = findViewById(R.id.btnHome);
 
         btnViewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +48,14 @@ public class OrderPlacedActivity extends AppCompatActivity {
                 Intent intent = new Intent(OrderPlacedActivity.this, MyOrderActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+            }
+        });
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrderPlacedActivity.this, DashboardActivity.class));
+                finishAffinity();
             }
         });
 
