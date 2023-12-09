@@ -28,19 +28,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btnOrder"
-        android:layout_below="@+id/toolBar"
-        android:background="@color/white">
+        android:layout_below="@+id/toolBar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fabulous"
+                android:text="Order Summary"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -152,6 +160,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/fabulous"
                 android:text="Customer Name,"
                 android:textColor="@color/grey"
@@ -186,6 +195,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/edt_bg">
 
                 <EditText
