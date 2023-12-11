@@ -1,6 +1,7 @@
 package com.ecommerce.onlineshopping.views.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -39,16 +40,19 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RegisterUser registerUser = shoppingViewModel.registerUser("Rajiv Kumar"
-                        , "543534534535"
-                        , "rajiv@gmail.com"
-                        , "Dhanbad"
-                        , "12345");
-                if (registerUser != null) {
-                    Toast.makeText(SignUpActivity.this, "" + registerUser.getMessage(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(SignUpActivity.this, "" + registerUser, Toast.LENGTH_SHORT).show();
-                }
+                shoppingViewModel.registerUser("Nirmal Kumar"
+                                , "543534534535"
+                                , "rajiv@gmail.com"
+                                , "Dhanbad"
+                                , "12345")
+                        .observe(SignUpActivity.this, new Observer<RegisterUser>() {
+                            @Override
+                            public void onChanged(RegisterUser registerUser) {
+                                if (registerUser != null) {
+                                    Toast.makeText(SignUpActivity.this, "" + registerUser.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
 

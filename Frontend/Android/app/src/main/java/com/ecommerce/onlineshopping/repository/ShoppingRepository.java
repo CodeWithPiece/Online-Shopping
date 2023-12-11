@@ -1,6 +1,8 @@
 package com.ecommerce.onlineshopping.repository;
 
+import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -14,9 +16,14 @@ import retrofit2.Response;
 
 public class ShoppingRepository {
 
-    private RegisterUser registerUser;
+    private final MutableLiveData<RegisterUser> registerLiveData = new MutableLiveData<>();
+    private final Application application;
 
-    public RegisterUser doRegister(String userName, String userNumber, String userEmail
+    public ShoppingRepository(Application application) {
+        this.application = application;
+    }
+
+    public MutableLiveData<RegisterUser> doRegister(String userName, String userNumber, String userEmail
             , String userAddress, String userPassword) {
         ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
         Call<RegisterUser> call = api.doRegister(userName, userNumber, userEmail, userAddress, userPassword);
@@ -25,8 +32,7 @@ public class ShoppingRepository {
             public void onResponse(Call<RegisterUser> call, Response<RegisterUser> response) {
                 RegisterUser user = response.body();
                 if (user != null && user.getStatus()) {
-                    registerUser = response.body();
-                    Log.e("USER", registerUser.getMessage() + "");
+                    registerLiveData.setValue(user);
                 }
             }
 
@@ -35,7 +41,7 @@ public class ShoppingRepository {
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });
-        return registerUser;
+        return registerLiveData;
     }
 
 }
