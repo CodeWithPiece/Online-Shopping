@@ -9,6 +9,7 @@ const ProductImageController = require("../controller/ProductImageController.js"
 router.post("/user/create", Validate.registerValidate, UserController.saveUser);
 router.post("/user/update", Validate.updateValidate, UserController.updateUser);
 router.post("/user/get", Validate.getByIdValidate, UserController.getUserById);
+router.post("/user/login", Validate.loginValidate, UserController.doLogin);
 router.post("/user/delete", Validate.getByIdValidate, UserController.deleteUserById);
 router.get("/user/all", UserController.getUsers);
 

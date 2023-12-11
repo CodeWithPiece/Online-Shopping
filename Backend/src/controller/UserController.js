@@ -102,6 +102,36 @@ exports.getUserById = (req, res) => {
   });
 };
 
+exports.doLogin = (req, res) => {
+  let m = {
+    userNumber: req.body.userNumber,
+    userPassword: req.body.userPassword,
+  };
+  userModel.doLogin(m, (err, user) => {
+    if (err) {
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+        user: null,
+      });
+    } else {
+      if (user == null) {
+        return res.status(404).json({
+          status: true,
+          message: "User not found...!!",
+          user: user,
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          message: "Login successfully...!!",
+          user: user,
+        });
+      }
+    }
+  });
+};
+
 exports.deleteUserById = (req, res) => {
   let userId = req.body.userId;
   userModel.deleteUserById(userId, (err, user) => {

@@ -73,6 +73,24 @@ User.getUserById = (userId, result) => {
   );
 };
 
+User.doLogin = (m, result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.users WHERE userNumber=? and userPassword=?",
+    [m.userNumber, m.userPassword],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          return result(null, res[0]);
+        } else {
+          return result(null, null);
+        }
+      }
+    }
+  );
+};
+
 User.deleteUserById = (userId, result) => {
   connection.query(
     "DELETE FROM online_shopping.users WHERE userId=?",

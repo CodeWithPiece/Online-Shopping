@@ -77,6 +77,28 @@ exports.getByIdValidate = (req, res, next) => {
   }
 };
 
+exports.loginValidate = (req, res, next) => {
+  try {
+    if (!req.body.userNumber) {
+      return res.status(400).json({
+        status: false,
+        message: "Number is required...",
+        user: null,
+      });
+    }
+    if (!req.body.userPassword) {
+      return res.status(400).json({
+        status: false,
+        message: "Password is required...",
+        user: null,
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 exports.addCategoryValidate = (req, res, next) => {
   try {
     if (!req.body.catName) {
@@ -382,4 +404,3 @@ exports.deleteImageValidate = (req, res, next) => {
     console.log(error);
   }
 };
-
