@@ -6,19 +6,23 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.model.RegisterUser;
-import com.ecommerce.onlineshopping.viewmodel.ShoppingViewModel;
+import com.ecommerce.onlineshopping.viewmodel.RegisterViewModel;
 import com.google.android.material.button.MaterialButton;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private ShoppingViewModel shoppingViewModel;
+    private RegisterViewModel registerViewModel;
+    EditText edtName, edtNumber, edtEmail, edtAddress, edtPassword;
+    boolean isAllFieldsChecked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +30,14 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         TextView txtLogin = findViewById(R.id.txtLogin);
+        ProgressBar progressBar = findViewById(R.id.progressBar);
         MaterialButton btnSignUp = findViewById(R.id.btnSignUp);
-        shoppingViewModel = new ViewModelProvider(this).get(ShoppingViewModel.class);
+        edtName = findViewById(R.id.edtName);
+        edtNumber = findViewById(R.id.edtNumber);
+        edtEmail = findViewById(R.id.edtEmail);
+        edtAddress = findViewById(R.id.edtAddress);
+        edtPassword = findViewById(R.id.edtPassword);
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,25 +47,67 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        registerViewModel.getProgressData().observe(SignUpActivity.this, new Observer<Integer>() {
             @Override
-            public void onClick(View v) {
-                shoppingViewModel.registerUser("Nirmal Kumar"
-                                , "543534534535"
-                                , "rajiv@gmail.com"
-                                , "Dhanbad"
-                                , "12345")
-                        .observe(SignUpActivity.this, new Observer<RegisterUser>() {
-                            @Override
-                            public void onChanged(RegisterUser registerUser) {
-                                if (registerUser != null) {
-                                    Toast.makeText(SignUpActivity.this, "" + registerUser.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+            public void onChanged(Integer integer) {
+                progressBar.setVisibility(integer);
             }
         });
 
+        registerViewModel.getRegisterData().observe(SignUpActivity.this, new Observer<RegisterUser>() {
+            @Override
+            public void onChanged(RegisterUser registerUser) {
+                if (registerUser != null) {
+                    Toast.makeText(SignUpActivity.this, "" + registerUser.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SignUpActivity.this, "Register Failure...!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isAllFieldsChecked = checkAllFields();
+                if (isAllFieldsChecked) {
+                    Log.e("NAME", edtName.getText().toString().trim());
+                    Log.e("NUMBER", edtNumber.getText().toString().trim());
+                    Log.e("EMAIL", edtEmail.getText().toString().trim());
+                    Log.e("ADDRESS", edtAddress.getText().toString().trim());
+                    Log.e("PASSWORD", edtPassword.getText().toString().trim());
+                    registerViewModel.registerUser(edtName.getText().toString().trim()
+                            , edtNumber.getText().toString().trim()
+                            , edtEmail.getText().toString().trim()
+                            , edtAddress.getText().toString().trim()
+                            , edtPassword.getText().toString().trim());
+                }
+            }
+        });
+
+    }
+
+    public boolean checkAllFields() {
+        if (edtName.length() == 0) {
+            edtName.setError("Please enter name...");
+            return false;
+        }
+        if (edtNumber.length() == 0) {
+            edtNumber.setError("Please enter number...");
+            return false;
+        }
+        if (edtEmail.length() == 0) {
+            edtEmail.setError("Please enter email...");
+            return false;
+        }
+        if (edtAddress.length() == 0) {
+            edtAddress.setError("Please enter address...");
+            return false;
+        }
+        if (edtPassword.length() == 0) {
+            edtPassword.setError("Please enter password...");
+            return false;
+        }
+        return true;
     }
 
 }
