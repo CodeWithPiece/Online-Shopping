@@ -59,6 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onChanged(RegisterUser registerUser) {
                 if (registerUser != null) {
                     Toast.makeText(SignUpActivity.this, "" + registerUser.getMessage(), Toast.LENGTH_SHORT).show();
+                    SignUpActivity.super.onBackPressed();
                 } else {
                     Toast.makeText(SignUpActivity.this, "Register Failure...!!", Toast.LENGTH_SHORT).show();
                 }
@@ -89,22 +90,27 @@ public class SignUpActivity extends AppCompatActivity {
     public boolean checkAllFields() {
         if (edtName.length() == 0) {
             edtName.setError("Please enter name...");
+            edtName.requestFocus();
             return false;
         }
         if (edtNumber.length() == 0) {
             edtNumber.setError("Please enter number...");
+            edtNumber.requestFocus();
             return false;
         }
         if (edtEmail.length() == 0) {
             edtEmail.setError("Please enter email...");
+            edtEmail.requestFocus();
             return false;
         }
         if (edtAddress.length() == 0) {
             edtAddress.setError("Please enter address...");
+            edtAddress.requestFocus();
             return false;
         }
         if (edtPassword.length() == 0) {
             edtPassword.setError("Please enter password...");
+            edtPassword.requestFocus();
             return false;
         }
         return true;
