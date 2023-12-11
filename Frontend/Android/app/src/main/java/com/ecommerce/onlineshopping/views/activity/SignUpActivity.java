@@ -1,15 +1,23 @@
 package com.ecommerce.onlineshopping.views.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ecommerce.onlineshopping.R;
+import com.ecommerce.onlineshopping.model.RegisterUser;
+import com.ecommerce.onlineshopping.viewmodel.ShoppingViewModel;
+import com.google.android.material.button.MaterialButton;
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private ShoppingViewModel shoppingViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +25,8 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         TextView txtLogin = findViewById(R.id.txtLogin);
+        MaterialButton btnSignUp = findViewById(R.id.btnSignUp);
+        shoppingViewModel = new ViewModelProvider(this).get(ShoppingViewModel.class);
 
         txtLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,5 +36,22 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterUser registerUser = shoppingViewModel.registerUser("Rajiv Kumar"
+                        , "543534534535"
+                        , "rajiv@gmail.com"
+                        , "Dhanbad"
+                        , "12345");
+                if (registerUser != null) {
+                    Toast.makeText(SignUpActivity.this, "" + registerUser.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SignUpActivity.this, "" + registerUser, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
+
 }
