@@ -1,5 +1,6 @@
 package com.ecommerce.onlineshopping.api;
 
+import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 
 import okhttp3.MultipartBody;
@@ -21,6 +22,11 @@ public interface ServiceApi {
                                   @Field("userEmail") String email,
                                   @Field("userAddress") String address,
                                   @Field("userPassword") String password);
+
+    @FormUrlEncoded
+    @POST("user/login")
+    Call<LoginRequest> doLogin(@Field("userNumber") String number,
+                               @Field("userPassword") String password);
 
 }
 
