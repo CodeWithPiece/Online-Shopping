@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.User;
+import com.ecommerce.onlineshopping.utils.MyPreferences;
 import com.ecommerce.onlineshopping.viewmodel.LoginViewModel;
 import com.ecommerce.onlineshopping.viewmodel.RegisterViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtNumber, edtPassword;
     boolean isAllFieldsChecked = false;
     private LoginViewModel loginViewModel;
+    MyPreferences myPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         ProgressBar progressBar = findViewById(R.id.progressBar);
         edtNumber = findViewById(R.id.edtNumber);
         edtPassword = findViewById(R.id.edtPassword);
+        myPreferences = MyPreferences.getInstance(LoginActivity.this);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         txtSignUp.setOnClickListener(new View.OnClickListener() {
@@ -57,9 +60,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(LoginRequest loginRequest) {
                 if (loginRequest != null) {
-                    Toast.makeText(LoginActivity.this, "" + loginRequest.getMessage(), Toast.LENGTH_SHORT).show();
+                    User user = loginRequest.getUser();
+                    myPreferences.saveUserDetails(user.getUserId()
+                            , user.getUserName()
+                            , user.getUserNumber()
+                            , user.getUserEmail()
+                            , user.getUserImage()
+                            , user.getUserAddress());
+                    Toast.makeText(LoginActivity.this, "Welcome " + user.getUserName(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                    finishAffinity();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login Failure...!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "User not found...!!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

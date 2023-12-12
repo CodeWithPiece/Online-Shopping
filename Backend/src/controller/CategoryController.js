@@ -80,7 +80,7 @@ exports.getCatById = (req, res) => {
         category: null,
       });
     } else {
-      if (category == null) {
+      if (category === null) {
         return res.status(404).json({
           status: false,
           message: "Category not found...!!",
