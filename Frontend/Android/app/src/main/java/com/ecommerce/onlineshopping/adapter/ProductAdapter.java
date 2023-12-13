@@ -9,17 +9,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ecommerce.onlineshopping.R;
+import com.ecommerce.onlineshopping.model.Product;
 import com.ecommerce.onlineshopping.views.activity.ProductDetailsActivity;
 import com.ecommerce.onlineshopping.views.fragment.CategoryFragment;
 import com.ecommerce.onlineshopping.views.fragment.HomeFragment;
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.List;
+
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     CategoryFragment categoryFragment;
+    List<Product> productList;
 
-    public ProductAdapter(CategoryFragment categoryFragment) {
+    public ProductAdapter(CategoryFragment categoryFragment, List<Product> productList) {
         this.categoryFragment = categoryFragment;
+        this.productList = productList;
     }
 
     @NonNull
@@ -43,7 +48,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 10;
+        return productList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -48,6 +48,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         if (rowIndex == holder.getAdapterPosition()) {
             holder.txtCategory.setTextColor(categoryFragment.getActivity().getColor(R.color.white));
             holder.txtCategory.setBackgroundResource(R.drawable.category_dark_bg);
+            categoryFragment.productViewModel.getProductByCategory(category.getCatId());
         } else {
             holder.txtCategory.setTextColor(categoryFragment.getActivity().getColor(R.color.seed));
             holder.txtCategory.setBackgroundResource(R.drawable.category_light_bg);

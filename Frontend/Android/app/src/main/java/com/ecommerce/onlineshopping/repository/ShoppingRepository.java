@@ -10,9 +10,11 @@ import com.ecommerce.onlineshopping.api.ApiClient;
 import com.ecommerce.onlineshopping.api.ServiceApi;
 import com.ecommerce.onlineshopping.callback.CategoryCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
+import com.ecommerce.onlineshopping.callback.ProductCallback;
 import com.ecommerce.onlineshopping.callback.RegisterCallback;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
+import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 import com.ecommerce.onlineshopping.model.User;
 
@@ -89,6 +91,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<CategoryRequest> call, Throwable t) {
                 categoryCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void getProductByCategory(int catId, ProductCallback productCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<ProductRequest> call = api.getProductByCategory(catId);
+        call.enqueue(new Callback<ProductRequest>() {
+            @Override
+            public void onResponse(Call<ProductRequest> call, Response<ProductRequest> response) {
+                if (response.isSuccessful()) {
+                    ProductRequest productRequest = response.body();
+                    productCallback.onResponse(productRequest);
+                } else {
+                    productCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductRequest> call, Throwable t) {
+                productCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });

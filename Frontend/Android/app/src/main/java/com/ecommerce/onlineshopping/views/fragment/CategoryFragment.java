@@ -22,9 +22,12 @@ import com.ecommerce.onlineshopping.adapter.CategoryAdapter;
 import com.ecommerce.onlineshopping.adapter.ProductAdapter;
 import com.ecommerce.onlineshopping.model.Category;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
+import com.ecommerce.onlineshopping.model.Product;
+import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.User;
 import com.ecommerce.onlineshopping.viewmodel.CategoryViewModel;
 import com.ecommerce.onlineshopping.viewmodel.LoginViewModel;
+import com.ecommerce.onlineshopping.viewmodel.ProductViewModel;
 import com.ecommerce.onlineshopping.views.activity.DashboardActivity;
 import com.ecommerce.onlineshopping.views.activity.LoginActivity;
 
@@ -34,7 +37,9 @@ import java.util.List;
 public class CategoryFragment extends Fragment {
 
     private CategoryViewModel categoryViewModel;
+    public ProductViewModel productViewModel;
     List<Category> categoryList = new ArrayList<>();
+    List<Product> productList = new ArrayList<>();
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -47,11 +52,12 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
 
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         RecyclerView categoryRecycler = view.findViewById(R.id.categoryRecycler);
         RecyclerView productRecycler = view.findViewById(R.id.productRecycler);
         ProgressBar progressBar = view.findViewById(R.id.progressBar);
         CategoryAdapter categoryAdapter = new CategoryAdapter(CategoryFragment.this, categoryList);
-        ProductAdapter productAdapter = new ProductAdapter(CategoryFragment.this);
+        ProductAdapter productAdapter = new ProductAdapter(CategoryFragment.this, productList);
         categoryRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         productRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
         categoryRecycler.setAdapter(categoryAdapter);
@@ -61,6 +67,20 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onChanged(Integer integer) {
                 progressBar.setVisibility(integer);
+            }
+        });
+
+        productViewModel.getProductData().observe(getViewLifecycleOwner(), new Observer<ProductRequest>() {
+            @Override
+            public void onChanged(ProductRequest productRequest) {
+                if (productRequest != null) {
+                    productList.clear();
+                    productAdapter.notifyDataSetChanged();
+                    productList.addAll(productRequest.getProduct());
+                    productAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(getContext(), "Products not found...!!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -80,4 +100,5 @@ public class CategoryFragment extends Fragment {
 
         return view;
     }
+
 }

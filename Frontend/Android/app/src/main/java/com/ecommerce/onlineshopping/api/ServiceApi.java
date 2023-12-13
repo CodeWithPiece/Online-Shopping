@@ -2,6 +2,7 @@ package com.ecommerce.onlineshopping.api;
 
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
+import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 
 import okhttp3.MultipartBody;
@@ -31,6 +32,10 @@ public interface ServiceApi {
 
     @GET("category/all")
     Call<CategoryRequest> getCategories();
+
+    @FormUrlEncoded
+    @POST("product/category")
+    Call<ProductRequest> getProductByCategory(@Field("catId") int catId);
 
 }
 
