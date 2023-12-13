@@ -1,25 +1,39 @@
 const productModel = require("../model/Product.js");
+const path = require("path");
 
 exports.saveProduct = (req, res) => {
-  let m = {
-    productName: req.body.productName,
-    productDesc: req.body.productDesc,
-    productPrice: req.body.productPrice,
-    productRating: req.body.productRating,
-    catId: req.body.catId,
-  };
-
-  productModel.saveProduct(m, (err, product) => {
-    console.log(err);
+  const image = req.files.productImage;
+  let imageName = Date.now();
+  const __dirname = path.resolve(path.dirname(__filename), "../../");
+  image.mv(`${__dirname}/public/images/${imageName}.jpg`, (err) => {
     if (err) {
       return res.status(500).json({
         status: false,
         message: "Internal server error",
       });
     } else {
-      return res.status(200).json({
-        status: true,
-        message: "Category added successfully...!!",
+      let m = {
+        productName: req.body.productName,
+        productDesc: req.body.productDesc,
+        productImage: `/content/images/${imageName}.jpg`,
+        productPrice: req.body.productPrice,
+        productRating: req.body.productRating,
+        catId: req.body.catId,
+      };
+
+      productModel.saveProduct(m, (err, product) => {
+        console.log(err);
+        if (err) {
+          return res.status(500).json({
+            status: false,
+            message: "Internal server error",
+          });
+        } else {
+          return res.status(200).json({
+            status: true,
+            message: "Category added successfully...!!",
+          });
+        }
       });
     }
   });
@@ -161,29 +175,29 @@ exports.getProduct = (req, res) => {
 };
 
 exports.deleteProductById = (req, res) => {
-    let m = {
-      userId: req.body.userId,
-      productId: req.body.productId,
-    };
-    productModel.deleteProductId(m, (err, product) => {
-      if (err) {
-        console.log(err);
-        return res.status(500).json({
-          status: false,
-          message: "Internal server error",
-        });
-      } else {
-        if (product === "Unauthorized") {
-          return res.status(400).json({
-            status: false,
-            message: "Unauthorized user...!!",
-          });
-        } else if (product === "Deleted") {
-          return res.status(200).json({
-            status: true,
-            message: "Category deleted successfully...!!",
-          });
-        }
-      }
-    });
+  let m = {
+    userId: req.body.userId,
+    productId: req.body.productId,
   };
+  productModel.deleteProductId(m, (err, product) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+      });
+    } else {
+      if (product === "Unauthorized") {
+        return res.status(400).json({
+          status: false,
+          message: "Unauthorized user...!!",
+        });
+      } else if (product === "Deleted") {
+        return res.status(200).json({
+          status: true,
+          message: "Category deleted successfully...!!",
+        });
+      }
+    }
+  });
+};
