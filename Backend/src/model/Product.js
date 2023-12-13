@@ -90,7 +90,7 @@ Product.getProductById = (productId, result) => {
 
 Product.getProductByCategory = (catId, result) => {
   connection.query(
-    "SELECT online_shopping.product.productId, online_shopping.product.productName, online_shopping.product.productDesc, online_shopping.product.productPrice, online_shopping.product.productRating, online_shopping.product.catId, online_shopping.product.updatedAt, online_shopping.product.createdAt FROM online_shopping.product INNER JOIN online_shopping.product_category ON online_shopping.product.catId = online_shopping.product_category.catId WHERE online_shopping.product_category.catId=? ORDER BY online_shopping.product.productId DESC",
+    "SELECT online_shopping.product.productId, online_shopping.product.productName, online_shopping.product.productDesc, online_shopping.product.productImage, online_shopping.product.productPrice, online_shopping.product.productRating, online_shopping.product.catId, online_shopping.product.updatedAt, online_shopping.product.createdAt FROM online_shopping.product INNER JOIN online_shopping.product_category ON online_shopping.product.catId = online_shopping.product_category.catId WHERE online_shopping.product_category.catId=? ORDER BY online_shopping.product.productId DESC",
     [catId],
     (err, res) => {
       if (err) {
