@@ -15,7 +15,14 @@ let Product = function (model) {
 Product.saveProduct = (m, result) => {
   connection.query(
     "INSERT INTO online_shopping.product (productName, productDesc, productImage, productPrice, productRating, catId) values(?,?,?,?,?,?)",
-    [m.productName, m.productDesc, m.productImage, m.productPrice, m.productRating, m.catId],
+    [
+      m.productName,
+      m.productDesc,
+      m.productImage,
+      m.productPrice,
+      m.productRating,
+      m.catId,
+    ],
     (err, res) => {
       if (err) {
         return result(err, null);
@@ -28,10 +35,11 @@ Product.saveProduct = (m, result) => {
 
 Product.updateProduct = (m, result) => {
   connection.query(
-    "UPDATE online_shopping.product SET productName=?, productDesc=?, productPrice=?, productRating=?, catId=? , updatedAt=? WHERE productId=?",
+    "UPDATE online_shopping.product SET productName=?, productDesc=?, productImage=?, productPrice=?, productRating=?, catId=? , updatedAt=? WHERE productId=?",
     [
       m.productName,
       m.productDesc,
+      m.productImage,
       m.productPrice,
       m.productRating,
       m.catId,

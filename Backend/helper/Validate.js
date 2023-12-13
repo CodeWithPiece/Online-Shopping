@@ -241,6 +241,12 @@ exports.addProductValidate = (req, res, next) => {
 
 exports.updateProductValidate = (req, res, next) => {
   try {
+    if (!req.files || Object.keys(req.files).length === 0) {
+      return res.status(400).json({
+        status: false,
+        message: "Product image required...!!",
+      });
+    }
     if (!req.body.productName) {
       return res.status(400).json({
         status: false,

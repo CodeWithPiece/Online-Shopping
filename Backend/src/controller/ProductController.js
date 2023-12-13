@@ -39,15 +39,52 @@ exports.saveProduct = (req, res) => {
 };
 
 exports.updateProduct = (req, res) => {
-  let m = {
-    productName: req.body.productName,
-    productDesc: req.body.productDesc,
-    productPrice: req.body.productPrice,
-    productRating: req.body.productRating,
-    catId: req.body.catId,
-    updatedAt: getDateTime(),
-    productId: req.body.productId,
-  };
+  const image = req.files.productImage;
+  let imageName = Date.now();
+  const __dirname = path.resolve(path.dirname(__filename), "../../");
+  image.mv(`${__dirname}/public/images/${imageName}.jpg`, (err) => {
+    if (err) {
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+      });
+    } else {
+      let m = {
+        productName: req.body.productName,
+        productDesc: req.body.productDesc,
+        productImage: `/content/images/${imageName}.jpg`,
+        productPrice: req.body.productPrice,
+        productRating: req.body.productRating,
+        catId: req.body.catId,
+        updatedAt: getDateTime(),
+        productId: req.body.productId,
+      };
+      productModel.updateProduct(m, (err, product) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            status: false,
+            message: "Internal server error",
+            product: null,
+          });
+        } else {
+          if (product == null) {
+            return res.status(404).json({
+              status: false,
+              message: "Product not found...!!",
+              product: product,
+            });
+          } else {
+            return res.status(200).json({
+              status: true,
+              message: "Product updated successfully...!!",
+              product: product,
+            });
+          }
+        }
+      });
+    }
+  });
 
   function getDateTime() {
     let date = new Date();
@@ -66,31 +103,6 @@ exports.updateProduct = (req, res) => {
 
     return Str;
   }
-
-  productModel.updateProduct(m, (err, product) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({
-        status: false,
-        message: "Internal server error",
-        product: null,
-      });
-    } else {
-      if (product == null) {
-        return res.status(404).json({
-          status: false,
-          message: "Product not found...!!",
-          product: product,
-        });
-      } else {
-        return res.status(200).json({
-          status: true,
-          message: "Product updated successfully...!!",
-          product: product,
-        });
-      }
-    }
-  });
 };
 
 exports.getProductById = (req, res) => {
