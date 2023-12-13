@@ -80,7 +80,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
-        productImageViewModel.getProgressData().observe(ProductDetailsActivity.this, new Observer<Integer>() {
+        productImageViewModel.getProgressData()
+                .observe(ProductDetailsActivity.this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 progressBar.setVisibility(integer);
