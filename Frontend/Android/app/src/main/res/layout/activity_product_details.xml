@@ -37,6 +37,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/imgProduct"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -104,6 +105,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtProductName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/raglika"
@@ -112,12 +114,14 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/txtCategoryName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/fabulous"
                             android:text="Category"
                             android:textColor="@color/grey"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -164,6 +168,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/txtProductDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/fabulous"
@@ -216,6 +221,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtProductPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fabulous"
@@ -255,5 +261,12 @@
         </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

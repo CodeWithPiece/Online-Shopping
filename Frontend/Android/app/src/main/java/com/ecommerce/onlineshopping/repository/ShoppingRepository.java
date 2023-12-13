@@ -126,12 +126,18 @@ public class ShoppingRepository {
         call.enqueue(new Callback<ProductImageRequest>() {
             @Override
             public void onResponse(Call<ProductImageRequest> call, Response<ProductImageRequest> response) {
-                
+                if (response.isSuccessful()) {
+                    ProductImageRequest productImageRequest = response.body();
+                    productImageCallback.onResponse(productImageRequest);
+                } else {
+                    productImageCallback.onFailure(new Throwable("Response Failure"));
+                }
             }
 
             @Override
             public void onFailure(Call<ProductImageRequest> call, Throwable t) {
-
+                productImageCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });
     }
