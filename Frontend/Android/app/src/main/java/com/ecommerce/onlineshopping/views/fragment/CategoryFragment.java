@@ -75,10 +75,11 @@ public class CategoryFragment extends Fragment {
             public void onChanged(ProductRequest productRequest) {
                 if (productRequest != null) {
                     productList.clear();
-                    productAdapter.notifyDataSetChanged();
                     productList.addAll(productRequest.getProduct());
                     productAdapter.notifyDataSetChanged();
                 } else {
+                    productList.clear();
+                    productAdapter.notifyDataSetChanged();
                     Toast.makeText(getContext(), "Products not found...!!", Toast.LENGTH_SHORT).show();
                 }
             }
