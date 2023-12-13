@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.model.Product;
+import com.ecommerce.onlineshopping.utils.Constant;
 import com.ecommerce.onlineshopping.views.activity.ProductDetailsActivity;
 import com.ecommerce.onlineshopping.views.fragment.CategoryFragment;
 import com.ecommerce.onlineshopping.views.fragment.HomeFragment;
@@ -36,6 +40,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Product product = productList.get(holder.getAdapterPosition());
+        Glide.with(categoryFragment)
+                .load(Constant.IMAGE_URL + product.getProductImage())
+                .into(holder.imgProduct);
+        holder.txtProductName.setText(product.getProductName());
+        holder.txtProductPrice.setText("₹ " + product.getProductPrice());
+        holder.txtRating.setText(product.getProductRating());
         holder.cardProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,10 +65,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView cardProduct;
+        ImageView imgProduct;
+        TextView txtProductName, txtProductPrice, txtRating;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cardProduct = itemView.findViewById(R.id.cardProduct);
+            imgProduct = itemView.findViewById(R.id.imgProduct);
+            txtProductName = itemView.findViewById(R.id.txtProductName);
+            txtProductPrice = itemView.findViewById(R.id.txtProductPrice);
+            txtRating = itemView.findViewById(R.id.txtRating);
         }
     }
 
