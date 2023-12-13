@@ -70,6 +70,13 @@ public class CategoryFragment extends Fragment {
             }
         });
 
+        productViewModel.getProgressData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                progressBar.setVisibility(integer);
+            }
+        });
+
         productViewModel.getProductData().observe(getViewLifecycleOwner(), new Observer<ProductRequest>() {
             @Override
             public void onChanged(ProductRequest productRequest) {
