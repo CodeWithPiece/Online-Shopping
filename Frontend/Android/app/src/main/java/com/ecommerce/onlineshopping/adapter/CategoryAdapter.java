@@ -10,16 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ecommerce.onlineshopping.R;
+import com.ecommerce.onlineshopping.model.Category;
 import com.ecommerce.onlineshopping.views.fragment.CategoryFragment;
 import com.ecommerce.onlineshopping.views.fragment.HomeFragment;
+
+import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     CategoryFragment categoryFragment;
+    List<Category> categoryList;
     int rowIndex = 0;
 
-    public CategoryAdapter(CategoryFragment categoryFragment) {
+    public CategoryAdapter(CategoryFragment categoryFragment, List<Category> categoryList) {
         this.categoryFragment = categoryFragment;
+        this.categoryList = categoryList;
     }
 
     @NonNull
@@ -31,6 +36,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Category category = categoryList.get(holder.getAdapterPosition());
+        holder.txtCategory.setText(category.getCatName());
         holder.txtCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return 10;
+        return categoryList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
