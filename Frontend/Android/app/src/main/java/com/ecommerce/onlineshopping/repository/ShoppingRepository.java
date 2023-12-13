@@ -8,8 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ecommerce.onlineshopping.api.ApiClient;
 import com.ecommerce.onlineshopping.api.ServiceApi;
+import com.ecommerce.onlineshopping.callback.CategoryCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
 import com.ecommerce.onlineshopping.callback.RegisterCallback;
+import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 import com.ecommerce.onlineshopping.model.User;
@@ -65,6 +67,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<LoginRequest> call, Throwable t) {
                 loginCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void getCategories(CategoryCallback categoryCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<CategoryRequest> call = api.getCategories();
+        call.enqueue(new Callback<CategoryRequest>() {
+            @Override
+            public void onResponse(Call<CategoryRequest> call, Response<CategoryRequest> response) {
+                if (response.isSuccessful()) {
+                    CategoryRequest categoryRequest = response.body();
+                    categoryCallback.onResponse(categoryRequest);
+                } else {
+                    categoryCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CategoryRequest> call, Throwable t) {
+                categoryCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });

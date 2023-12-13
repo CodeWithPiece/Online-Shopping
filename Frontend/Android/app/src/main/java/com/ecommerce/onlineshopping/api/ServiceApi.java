@@ -1,5 +1,6 @@
 package com.ecommerce.onlineshopping.api;
 
+import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 
@@ -27,6 +28,9 @@ public interface ServiceApi {
     @POST("user/login")
     Call<LoginRequest> doLogin(@Field("userNumber") String number,
                                @Field("userPassword") String password);
+
+    @GET("category/all")
+    Call<CategoryRequest> getCategories();
 
 }
 
