@@ -15,6 +15,7 @@ import com.ecommerce.onlineshopping.model.ProductImage;
 import com.ecommerce.onlineshopping.utils.Constant;
 import com.ecommerce.onlineshopping.views.activity.ProductDetailsActivity;
 import com.ecommerce.onlineshopping.views.fragment.CategoryFragment;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
     ProductDetailsActivity productDetailsActivity;
     List<ProductImage> productImageList;
+    int rowIndex = -1;
 
     public ImageSliderAdapter(ProductDetailsActivity productDetailsActivity, List<ProductImage> productImageList) {
         this.productDetailsActivity = productDetailsActivity;
@@ -41,6 +43,20 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
         Glide.with(productDetailsActivity)
                 .load(Constant.IMAGE_URL + productImage.getImageUrl())
                 .into(holder.productImage);
+        holder.imgCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rowIndex = holder.getAdapterPosition();
+                notifyDataSetChanged();
+            }
+        });
+
+        if (rowIndex == holder.getAdapterPosition()) {
+            Glide.with(productDetailsActivity)
+                    .load(Constant.IMAGE_URL + productImage.getImageUrl())
+                    .into(productDetailsActivity.imgProduct);
+        }
+
     }
 
     @Override
@@ -51,11 +67,13 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView productImage;
+        MaterialCardView imgCard;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             productImage = itemView.findViewById(R.id.productImage);
+            imgCard = itemView.findViewById(R.id.imgCard);
 
         }
     }

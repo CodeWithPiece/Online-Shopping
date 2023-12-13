@@ -16,12 +16,14 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.adapter.ImageSliderAdapter;
 import com.ecommerce.onlineshopping.adapter.SizeAdapter;
 import com.ecommerce.onlineshopping.model.Product;
 import com.ecommerce.onlineshopping.model.ProductImage;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
+import com.ecommerce.onlineshopping.utils.Constant;
 import com.ecommerce.onlineshopping.viewmodel.ProductImageViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -31,6 +33,7 @@ import java.util.List;
 public class ProductDetailsActivity extends AppCompatActivity {
 
     private ProductImageViewModel productImageViewModel;
+    public ImageView imgProduct;
     List<ProductImage> productImageList = new ArrayList<>();
 
     @Override
@@ -39,8 +42,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_details);
 
         MaterialToolbar toolBar = findViewById(R.id.toolBar);
-        ImageView imgProduct = findViewById(R.id.imgProduct);
         TextView txtProductName = findViewById(R.id.txtProductName);
+        imgProduct = findViewById(R.id.imgProduct);
         RatingBar rating = findViewById(R.id.rating);
         TextView txtRating = findViewById(R.id.txtRating);
         TextView txtProductDesc = findViewById(R.id.txtProductDesc);
@@ -59,6 +62,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         if (bundle != null) {
             Product product = (Product) bundle.getSerializable("product");
+            Glide.with(ProductDetailsActivity.this)
+                    .load(Constant.IMAGE_URL + product.getProductImage())
+                    .into(imgProduct);
+            txtProductName.setText(product.getProductName());
+            txtProductDesc.setText(product.getProductDesc());
+            txtRating.setText(product.getProductRating() + " rating");
+            rating.setRating((float) Double.parseDouble(product.getProductRating()));
+            txtProductPrice.setText("₹ " + product.getProductPrice());
             productImageViewModel.getProductImage(product.getProductId());
         }
 
