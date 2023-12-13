@@ -11,9 +11,11 @@ import com.ecommerce.onlineshopping.api.ServiceApi;
 import com.ecommerce.onlineshopping.callback.CategoryCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
 import com.ecommerce.onlineshopping.callback.ProductCallback;
+import com.ecommerce.onlineshopping.callback.ProductImageCallback;
 import com.ecommerce.onlineshopping.callback.RegisterCallback;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
+import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 import com.ecommerce.onlineshopping.model.User;
@@ -114,6 +116,22 @@ public class ShoppingRepository {
             public void onFailure(Call<ProductRequest> call, Throwable t) {
                 productCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void getProductImage(int productId, ProductImageCallback productImageCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<ProductImageRequest> call = api.getProductImage(productId);
+        call.enqueue(new Callback<ProductImageRequest>() {
+            @Override
+            public void onResponse(Call<ProductImageRequest> call, Response<ProductImageRequest> response) {
+                
+            }
+
+            @Override
+            public void onFailure(Call<ProductImageRequest> call, Throwable t) {
+
             }
         });
     }

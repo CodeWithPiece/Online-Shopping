@@ -2,6 +2,7 @@ package com.ecommerce.onlineshopping.api;
 
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
+import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 
@@ -36,6 +37,10 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST("product/category")
     Call<ProductRequest> getProductByCategory(@Field("catId") int catId);
+
+    @FormUrlEncoded
+    @POST("image/get")
+    Call<ProductImageRequest> getProductImage(@Field("productId") int productId);
 
 }
 
