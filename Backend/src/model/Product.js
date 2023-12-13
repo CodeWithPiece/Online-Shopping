@@ -4,6 +4,7 @@ let Product = function (model) {
   this.productId = model.productId;
   this.productName = model.productName;
   this.productDesc = model.productDesc;
+  this.productImage = model.productImage;
   this.productPrice = model.productPrice;
   this.productRating = model.productRating;
   this.catId = model.catId;
@@ -13,8 +14,8 @@ let Product = function (model) {
 
 Product.saveProduct = (m, result) => {
   connection.query(
-    "INSERT INTO online_shopping.product (productName, productDesc, productPrice, productRating, catId) values(?,?,?,?,?)",
-    [m.productName, m.productDesc, m.productPrice, m.productRating, m.catId],
+    "INSERT INTO online_shopping.product (productName, productDesc, productImage, productPrice, productRating, catId) values(?,?,?,?,?,?)",
+    [m.productName, m.productDesc, m.productImage, m.productPrice, m.productRating, m.catId],
     (err, res) => {
       if (err) {
         return result(err, null);

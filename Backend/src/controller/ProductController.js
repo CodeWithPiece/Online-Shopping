@@ -22,7 +22,6 @@ exports.saveProduct = (req, res) => {
       };
 
       productModel.saveProduct(m, (err, product) => {
-        console.log(err);
         if (err) {
           return res.status(500).json({
             status: false,
