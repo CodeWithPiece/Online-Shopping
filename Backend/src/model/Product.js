@@ -119,6 +119,7 @@ Product.getProduct = (result) => {
           return result(null, []);
         }
       }
+      
     }
   );
 };
