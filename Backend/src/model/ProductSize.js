@@ -22,4 +22,18 @@ ProductSize.saveProductSize = (m, result) => {
   );
 };
 
+ProductSize.updateProductSize = (m, result) => {
+  connection.query(
+    "UPDATE online_shopping.product_size SET sizeName=?, productId=?, updatedAt=? WHERE sizeId=?",
+    [m.sizeName, m.productId, m.updatedAt, m.sizeId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        return result(null, res);
+      }
+    }
+  );
+};
+
 module.exports = ProductSize;

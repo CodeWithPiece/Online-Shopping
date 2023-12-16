@@ -34,5 +34,6 @@ router.post("/image/get", Validate.getImageValidate, ProductImageController.getI
 router.post("/image/delete", Validate.deleteImageValidate, ProductImageController.deleteImageById);
 
 router.post("/size/create", Validate.addSizeValidate, ProductSizeController.saveProductSize);
+router.post("/size/update", Validate.updateSizeValidate, ProductSizeController.updateProductSize);
 
 module.exports = router;

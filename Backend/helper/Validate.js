@@ -436,3 +436,29 @@ exports.addSizeValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.updateSizeValidate = (req, res, next) => {
+  try {
+    if (!req.body.sizeName) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product size...!!",
+      });
+    }
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product id...!!",
+      });
+    }
+    if (!req.body.sizeId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter size id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
