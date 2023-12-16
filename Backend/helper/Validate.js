@@ -550,3 +550,17 @@ exports.getCartValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.deleteCartValidate = (req, res, next) => {
+  try {
+    if (!req.body.cartId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter cart id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};

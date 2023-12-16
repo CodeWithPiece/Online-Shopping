@@ -56,4 +56,18 @@ Cart.getCartByUserId = (userId, result) => {
   );
 };
 
+Cart.deleteCartById = (cartId, result) => {
+    connection.query(
+      "DELETE FROM online_shopping.cart WHERE cartId=?",
+      [cartId],
+      (err, res) => {
+        if (err) {
+          return result(err, null);
+        } else {
+          return result(null, res);
+        }
+      }
+    );
+  };
+
 module.exports = Cart;

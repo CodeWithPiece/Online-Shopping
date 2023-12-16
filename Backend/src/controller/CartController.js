@@ -85,3 +85,21 @@ exports.getCartByUserId = (req, res) => {
     }
   });
 };
+
+exports.deleteCartById = (req, res) => {
+  let cartId = req.body.cartId;
+  cartModel.deleteCartById(cartId, (err, cart) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        message: "Cart deleted successfully...!!",
+      });
+    }
+  });
+};

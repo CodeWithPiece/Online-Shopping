@@ -43,5 +43,6 @@ router.post("/size/delete", Validate.deleteSizeValidate, ProductSizeController.d
 router.post("/cart/add", Validate.addToCartValidate, CartController.addToCart);
 router.post("/cart/update", Validate.updateCartValidate, CartController.updateCart);
 router.post("/cart/get", Validate.getCartValidate, CartController.getCartByUserId);
+router.post("/cart/delete", Validate.deleteCartValidate, CartController.deleteCartById);
 
 module.exports = router;
