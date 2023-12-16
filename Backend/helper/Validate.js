@@ -536,3 +536,17 @@ exports.updateCartValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.getCartValidate = (req, res, next) => {
+  try {
+    if (!req.body.userId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter user id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};

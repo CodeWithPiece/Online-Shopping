@@ -58,3 +58,30 @@ exports.updateCart = (req, res) => {
     return Str;
   }
 };
+
+exports.getCartByUserId = (req, res) => {
+  let userId = req.body.userId;
+  cartModel.getCartByUserId(userId, (err, cart) => {
+    if (err) {
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+        cart: [],
+      });
+    } else {
+      if (cart.length == 0) {
+        return res.status(404).json({
+          status: false,
+          message: "No cart found...!!",
+          cart: cart,
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          message: "Cart Details...!!",
+          cart: cart,
+        });
+      }
+    }
+  });
+};

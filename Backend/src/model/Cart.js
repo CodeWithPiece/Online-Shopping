@@ -40,8 +40,8 @@ Cart.updateCart = (m, result) => {
 
 Cart.getCartByUserId = (userId, result) => {
   connection.query(
-    "SELECT online_shopping.product_size.sizeId, online_shopping.product_size.sizeName, online_shopping.product_size.productId, online_shopping.product_size.updatedAt, online_shopping.product_size.createdAt FROM online_shopping.product_size JOIN online_shopping.product ON online_shopping.product_size.productId = online_shopping.product.productId WHERE online_shopping.product_size.productId=?",
-    [productId],
+    "SELECT online_shopping.cart.cartId, online_shopping.cart.productCount, online_shopping.product_size.sizeName, online_shopping.product.productId, online_shopping.product.productName, online_shopping.product.productDesc, online_shopping.product.productImage, online_shopping.product.productPrice, online_shopping.product.productRating, online_shopping.product.catId, online_shopping.product.updatedAt, online_shopping.product.createdAt FROM online_shopping.cart JOIN online_shopping.product ON online_shopping.cart.productId = online_shopping.product.productId JOIN online_shopping.product_size ON online_shopping.cart.sizeId = online_shopping.product_size.sizeId JOIN online_shopping.users ON online_shopping.cart.userId = online_shopping.users.userId WHERE online_shopping.users.userId=?",
+    [userId],
     (err, res) => {
       if (err) {
         return result(err, null);
