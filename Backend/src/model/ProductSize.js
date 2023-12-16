@@ -36,4 +36,36 @@ ProductSize.updateProductSize = (m, result) => {
   );
 };
 
+ProductSize.getSizeByProductId = (productId, result) => {
+  connection.query(
+    "SELECT online_shopping.product_size.sizeId, online_shopping.product_size.sizeName, online_shopping.product_size.productId, online_shopping.product_size.updatedAt, online_shopping.product_size.createdAt FROM online_shopping.product_size JOIN online_shopping.product ON online_shopping.product_size.productId = online_shopping.product.productId WHERE online_shopping.product_size.productId=?",
+    [productId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          return result(null, res);
+        } else {
+          return result(null, []);
+        }
+      }
+    }
+  );
+};
+
+ProductSize.deleteSizeById = (sizeId, result) => {
+  connection.query(
+    "DELETE FROM online_shopping.product_size WHERE sizeId=?",
+    [sizeId],
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        return result(null, res);
+      }
+    }
+  );
+};
+
 module.exports = ProductSize;

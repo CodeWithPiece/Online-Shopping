@@ -58,3 +58,48 @@ exports.updateProductSize = (req, res) => {
     return Str;
   }
 };
+
+exports.getSizeByProductId = (req, res) => {
+  let productId = req.body.productId;
+  productSizeModel.getSizeByProductId(productId, (err, productSize) => {
+    if (err) {
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+        productSize: [],
+      });
+    } else {
+      if (productSize.length == 0) {
+        return res.status(404).json({
+          status: false,
+          message: "No product size found...!!",
+          productSize: productSize,
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          message: "Available sizes...!!",
+          productSize: productSize,
+        });
+      }
+    }
+  });
+};
+
+exports.deleteSizeById = (req, res) => {
+  let sizeId = req.body.sizeId;
+  productSizeModel.deleteSizeById(sizeId, (err, productSize) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        status: false,
+        message: "Internal server error",
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        message: "Size deleted successfully...!!",
+      });
+    }
+  });
+};

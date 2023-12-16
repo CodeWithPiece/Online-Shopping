@@ -462,3 +462,31 @@ exports.updateSizeValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.getSizeValidate = (req, res, next) => {
+  try {
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter product id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.deleteSizeValidate = (req, res, next) => {
+  try {
+    if (!req.body.sizeId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter size id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
