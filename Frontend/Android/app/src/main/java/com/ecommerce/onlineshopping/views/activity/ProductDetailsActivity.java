@@ -23,8 +23,11 @@ import com.ecommerce.onlineshopping.adapter.SizeAdapter;
 import com.ecommerce.onlineshopping.model.Product;
 import com.ecommerce.onlineshopping.model.ProductImage;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
+import com.ecommerce.onlineshopping.model.ProductSize;
+import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.utils.Constant;
 import com.ecommerce.onlineshopping.viewmodel.ProductImageViewModel;
+import com.ecommerce.onlineshopping.viewmodel.ProductSizeViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
@@ -32,9 +35,11 @@ import java.util.List;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    private ProductImageViewModel productImageViewModel;
+    ProductImageViewModel productImageViewModel;
+    ProductSizeViewModel productSizeViewModel;
     public ImageView imgProduct;
     List<ProductImage> productImageList = new ArrayList<>();
+    List<ProductSize> productSizeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +57,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         RecyclerView sizeRecycler = findViewById(R.id.sizeRecycler);
         ProgressBar progressBar = findViewById(R.id.progressBar);
         productImageViewModel = new ViewModelProvider(this).get(ProductImageViewModel.class);
+        productSizeViewModel = new ViewModelProvider(this).get(ProductSizeViewModel.class);
         ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(ProductDetailsActivity.this, productImageList);
-        SizeAdapter sizeAdapter = new SizeAdapter(ProductDetailsActivity.this);
+        SizeAdapter sizeAdapter = new SizeAdapter(ProductDetailsActivity.this, productSizeList);
         imageRecycler.setLayoutManager(new LinearLayoutManager(ProductDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
         sizeRecycler.setLayoutManager(new LinearLayoutManager(ProductDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
         imageRecycler.setAdapter(imageSliderAdapter);
@@ -71,6 +77,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             rating.setRating((float) Double.parseDouble(product.getProductRating()));
             txtProductPrice.setText("₹ " + product.getProductPrice());
             productImageViewModel.getProductImage(product.getProductId());
+            productSizeViewModel.getProductSize(product.getProductId());
         }
 
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -80,8 +87,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
-        productImageViewModel.getProgressData()
-                .observe(ProductDetailsActivity.this, new Observer<Integer>() {
+        productImageViewModel.getProgressData().observe(ProductDetailsActivity.this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                progressBar.setVisibility(integer);
+            }
+        });
+
+        productSizeViewModel.getProgressData().observe(ProductDetailsActivity.this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 progressBar.setVisibility(integer);
@@ -96,6 +109,18 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     imageSliderAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(ProductDetailsActivity.this, "Product image not found...!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        productSizeViewModel.getProductSizeData().observe(ProductDetailsActivity.this, new Observer<ProductSizeRequest>() {
+            @Override
+            public void onChanged(ProductSizeRequest productSizeRequest) {
+                if (productSizeRequest != null) {
+                    productSizeList.addAll(productSizeRequest.getProductSize());
+                    sizeAdapter.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(ProductDetailsActivity.this, "Product size not found...!!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

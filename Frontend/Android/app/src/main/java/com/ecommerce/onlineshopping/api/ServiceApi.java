@@ -4,6 +4,7 @@ import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
+import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 
 import okhttp3.MultipartBody;
@@ -41,6 +42,10 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST("image/get")
     Call<ProductImageRequest> getProductImage(@Field("productId") int productId);
+
+    @FormUrlEncoded
+    @POST("size/get")
+    Call<ProductSizeRequest> getProductSize(@Field("productId") int productId);
 
 }
 

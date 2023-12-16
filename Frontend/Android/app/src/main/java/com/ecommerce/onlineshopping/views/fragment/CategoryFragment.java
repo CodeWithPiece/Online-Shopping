@@ -36,7 +36,7 @@ import java.util.List;
 
 public class CategoryFragment extends Fragment {
 
-    private CategoryViewModel categoryViewModel;
+    CategoryViewModel categoryViewModel;
     public ProductViewModel productViewModel;
     List<Category> categoryList = new ArrayList<>();
     List<Product> productList = new ArrayList<>();

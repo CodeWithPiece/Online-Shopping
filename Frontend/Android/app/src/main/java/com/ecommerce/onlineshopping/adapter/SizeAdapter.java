@@ -9,16 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ecommerce.onlineshopping.R;
+import com.ecommerce.onlineshopping.model.ProductSize;
 import com.ecommerce.onlineshopping.views.activity.ProductDetailsActivity;
 import com.google.android.material.card.MaterialCardView;
+
+import java.util.List;
 
 public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
 
     ProductDetailsActivity productDetailsActivity;
+    List<ProductSize> productSizeList;
     int rowIndex = 0;
 
-    public SizeAdapter(ProductDetailsActivity productDetailsActivity) {
+    public SizeAdapter(ProductDetailsActivity productDetailsActivity, List<ProductSize> productSizeList) {
         this.productDetailsActivity = productDetailsActivity;
+        this.productSizeList = productSizeList;
     }
 
     @NonNull
@@ -30,6 +35,8 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ProductSize productSize = productSizeList.get(holder.getAdapterPosition());
+        holder.txtSize.setText(productSize.getSizeName());
         holder.cardSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +56,7 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 5;
+        return productSizeList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

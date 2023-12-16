@@ -12,11 +12,14 @@ import com.ecommerce.onlineshopping.callback.CategoryCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
 import com.ecommerce.onlineshopping.callback.ProductCallback;
 import com.ecommerce.onlineshopping.callback.ProductImageCallback;
+import com.ecommerce.onlineshopping.callback.ProductSizeCallback;
 import com.ecommerce.onlineshopping.callback.RegisterCallback;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
+import com.ecommerce.onlineshopping.model.ProductSize;
+import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 import com.ecommerce.onlineshopping.model.User;
 
@@ -137,6 +140,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<ProductImageRequest> call, Throwable t) {
                 productImageCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void getProductSize(int productId, ProductSizeCallback productSizeCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<ProductSizeRequest> call = api.getProductSize(productId);
+        call.enqueue(new Callback<ProductSizeRequest>() {
+            @Override
+            public void onResponse(Call<ProductSizeRequest> call, Response<ProductSizeRequest> response) {
+                if (response.isSuccessful()) {
+                    ProductSizeRequest productSizeRequest = response.body();
+                    productSizeCallback.onResponse(productSizeRequest);
+                } else {
+                    productSizeCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductSizeRequest> call, Throwable t) {
+                productSizeCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });
