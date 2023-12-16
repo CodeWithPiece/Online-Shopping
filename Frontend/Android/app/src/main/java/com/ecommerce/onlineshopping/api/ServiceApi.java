@@ -6,6 +6,7 @@ import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
+import com.ecommerce.onlineshopping.model.TrendingProductRequest;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -46,6 +47,9 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST("size/get")
     Call<ProductSizeRequest> getProductSize(@Field("productId") int productId);
+
+    @GET("product/random")
+    Call<TrendingProductRequest> getTrendingProducts();
 
 }
 

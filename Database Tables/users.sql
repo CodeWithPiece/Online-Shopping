@@ -21,12 +21,14 @@ CREATE TABLE Users (
 );
 
 SELECT CURRENT_TIMESTAMP();
-select * from online_shopping.users;
+SELECT * FROM online_shopping.users ORDER BY userId DESC;
 INSERT INTO online_shopping.users (userName, userNumber, userEmail, userImage, userAddress, userPassword)
 VALUES ("Nirmal Kumar", "9898989898", "nirmal@dasdasdasd.com", "img.jpg", "Ranchi, asdadada", "dasdasdads" );
 UPDATE online_shopping.users SET userName=? , userEmail =? , userAddress =?, updatedAt=? WHERE userId=?;
+UPDATE online_shopping.users SET isAdmin=1 WHERE userId=28;
 ALTER TABLE users MODIFY COLUMN isAdmin int DEFAULT 0;
 TRUNCATE TABLE online_shopping.users;
 select * from online_shopping.users where userNumber=6203385312 limit 1;
+select * from online_shopping.users where userNumber=6202503675 and userPassword="12345678";
 select * from online_shopping.users where userId=6;
-DELETE FROM online_shopping.users WHERE userId=3;
+DELETE FROM online_shopping.users WHERE userId=27;

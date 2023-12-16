@@ -14,6 +14,7 @@ import com.ecommerce.onlineshopping.callback.ProductCallback;
 import com.ecommerce.onlineshopping.callback.ProductImageCallback;
 import com.ecommerce.onlineshopping.callback.ProductSizeCallback;
 import com.ecommerce.onlineshopping.callback.RegisterCallback;
+import com.ecommerce.onlineshopping.callback.TrendingProductCallback;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
@@ -21,6 +22,7 @@ import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.ProductSize;
 import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
+import com.ecommerce.onlineshopping.model.TrendingProductRequest;
 import com.ecommerce.onlineshopping.model.User;
 
 import retrofit2.Call;
@@ -162,6 +164,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<ProductSizeRequest> call, Throwable t) {
                 productSizeCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void getTrendingProducts(TrendingProductCallback trendingProductCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<TrendingProductRequest> call = api.getTrendingProducts();
+        call.enqueue(new Callback<TrendingProductRequest>() {
+            @Override
+            public void onResponse(Call<TrendingProductRequest> call, Response<TrendingProductRequest> response) {
+                if (response.isSuccessful()) {
+                    TrendingProductRequest trendingProductRequest = response.body();
+                    trendingProductCallback.onResponse(trendingProductRequest);
+                } else {
+                    trendingProductCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TrendingProductRequest> call, Throwable t) {
+                trendingProductCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });
