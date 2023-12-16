@@ -490,3 +490,49 @@ exports.deleteSizeValidate = (req, res, next) => {
     console.log(error);
   }
 };
+
+exports.addToCartValidate = (req, res, next) => {
+  try {
+    if (!req.body.userId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter user id...!!",
+      });
+    }
+    if (!req.body.productId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter productId id...!!",
+      });
+    }
+    if (!req.body.sizeId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter size id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.updateCartValidate = (req, res, next) => {
+  try {
+    if (!req.body.productCount) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter count...!!",
+      });
+    }
+    if (!req.body.cartId) {
+      return res.status(400).json({
+        status: false,
+        message: "Enter cart id...!!",
+      });
+    }
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};

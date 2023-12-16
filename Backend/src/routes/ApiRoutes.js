@@ -6,6 +6,7 @@ const CategoryController = require("../controller/CategoryController.js");
 const ProductController = require("../controller/ProductController.js");
 const ProductImageController = require("../controller/ProductImageController.js");
 const ProductSizeController = require("../controller/ProductSizeController.js");
+const CartController = require("../controller/CartController.js");
 
 router.post("/user/create", Validate.registerValidate, UserController.saveUser);
 router.post("/user/update", Validate.updateValidate, UserController.updateUser);
@@ -38,5 +39,8 @@ router.post("/size/create", Validate.addSizeValidate, ProductSizeController.save
 router.post("/size/update", Validate.updateSizeValidate, ProductSizeController.updateProductSize);
 router.post("/size/get", Validate.getSizeValidate, ProductSizeController.getSizeByProductId);
 router.post("/size/delete", Validate.deleteSizeValidate, ProductSizeController.deleteSizeById);
+
+router.post("/cart/add", Validate.addToCartValidate, CartController.addToCart);
+router.post("/cart/update", Validate.updateCartValidate, CartController.updateCart);
 
 module.exports = router;
