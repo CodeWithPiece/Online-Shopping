@@ -124,6 +124,24 @@ Product.getProduct = (result) => {
   );
 };
 
+Product.getRandomProduct = (result) => {
+  connection.query(
+    "SELECT * FROM online_shopping.product ORDER BY RAND() LIMIT 10",
+    (err, res) => {
+      if (err) {
+        return result(err, null);
+      } else {
+        if (res && res.length) {
+          return result(null, res);
+        } else {
+          return result(null, []);
+        }
+      }
+      
+    }
+  );
+};
+
 Product.deleteProductId = (m, result) => {
   connection.query(
     "SELECT * FROM online_shopping.users WHERE userId=?",

@@ -26,6 +26,7 @@ router.post("/product/update", Validate.updateProductValidate, ProductController
 router.post("/product/get", Validate.getProductByIdValidate, ProductController.getProductById);
 router.post("/product/category", Validate.getProductByCatValidate, ProductController.getProductByCategory);
 router.get("/product/all", ProductController.getProduct);
+router.get("/product/random", ProductController.getRandomProduct);
 router.post("/product/delete", Validate.deleteProductValidate, ProductController.deleteProductById);
 
 router.post("/image/create", Validate.addImageValidate, ProductImageController.saveProductImage);
