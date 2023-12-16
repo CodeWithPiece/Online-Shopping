@@ -23,6 +23,7 @@ exports.saveProduct = (req, res) => {
 
       productModel.saveProduct(m, (err, product) => {
         if (err) {
+          console.log(err);
           return res.status(500).json({
             status: false,
             message: "Internal server error",
@@ -30,7 +31,7 @@ exports.saveProduct = (req, res) => {
         } else {
           return res.status(200).json({
             status: true,
-            message: "Category added successfully...!!",
+            message: "Product added successfully...!!",
           });
         }
       });
