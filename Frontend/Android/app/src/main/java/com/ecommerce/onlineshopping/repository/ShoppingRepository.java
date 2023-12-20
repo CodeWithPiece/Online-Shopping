@@ -13,6 +13,7 @@ import com.ecommerce.onlineshopping.callback.CartCallback;
 import com.ecommerce.onlineshopping.callback.CategoryCallback;
 import com.ecommerce.onlineshopping.callback.DeleteCartCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
+import com.ecommerce.onlineshopping.callback.PlaceOrderCallback;
 import com.ecommerce.onlineshopping.callback.ProductCallback;
 import com.ecommerce.onlineshopping.callback.ProductImageCallback;
 import com.ecommerce.onlineshopping.callback.ProductSizeCallback;
@@ -24,6 +25,7 @@ import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.DeleteCart;
 import com.ecommerce.onlineshopping.model.LoginRequest;
+import com.ecommerce.onlineshopping.model.PlaceOrder;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.ProductSize;
@@ -282,6 +284,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<DeleteCart> call, Throwable t) {
                 deleteCartCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void placeOrder(int userId, PlaceOrderCallback placeOrderCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<PlaceOrder> call = api.placeOrder(userId);
+        call.enqueue(new Callback<PlaceOrder>() {
+            @Override
+            public void onResponse(Call<PlaceOrder> call, Response<PlaceOrder> response) {
+                if (response.isSuccessful()) {
+                    PlaceOrder placeOrder = response.body();
+                    placeOrderCallback.onResponse(placeOrder);
+                } else {
+                    placeOrderCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PlaceOrder> call, Throwable t) {
+                placeOrderCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });

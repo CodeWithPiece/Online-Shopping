@@ -1,6 +1,8 @@
 package com.ecommerce.onlineshopping.views.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,9 +16,14 @@ import android.widget.TextView;
 
 import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.adapter.OrderAdapter;
+import com.ecommerce.onlineshopping.model.PlaceOrder;
+import com.ecommerce.onlineshopping.utils.MyPreferences;
+import com.ecommerce.onlineshopping.viewmodel.CartViewModel;
+import com.ecommerce.onlineshopping.viewmodel.OrderViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
 
 public class MyOrderActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,7 @@ public class MyOrderActivity extends AppCompatActivity {
 
         MaterialToolbar toolBar = findViewById(R.id.toolBar);
         RecyclerView orderRecycler = findViewById(R.id.orderRecycler);
+        MyPreferences myPreferences = MyPreferences.getInstance(MyOrderActivity.this);
         OrderAdapter orderAdapter = new OrderAdapter(MyOrderActivity.this);
         orderRecycler.setLayoutManager(new LinearLayoutManager(MyOrderActivity.this, LinearLayoutManager.VERTICAL, false));
         orderRecycler.setAdapter(orderAdapter);
@@ -32,7 +40,7 @@ public class MyOrderActivity extends AppCompatActivity {
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyOrderActivity.super.onBackPressed();
+                getOnBackPressedDispatcher().onBackPressed();
             }
         });
 

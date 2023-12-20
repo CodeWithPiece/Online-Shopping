@@ -23,11 +23,15 @@ import com.ecommerce.onlineshopping.adapter.CartAdapter;
 import com.ecommerce.onlineshopping.model.CartModel;
 import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.DeleteCart;
+import com.ecommerce.onlineshopping.model.PlaceOrder;
 import com.ecommerce.onlineshopping.model.UpdateCart;
 import com.ecommerce.onlineshopping.utils.MyPreferences;
 import com.ecommerce.onlineshopping.utils.SwipeToDeleteCallback;
 import com.ecommerce.onlineshopping.viewmodel.CartViewModel;
+import com.ecommerce.onlineshopping.viewmodel.OrderViewModel;
 import com.ecommerce.onlineshopping.views.activity.CheckOutActivity;
+import com.ecommerce.onlineshopping.views.activity.MyOrderActivity;
+import com.ecommerce.onlineshopping.views.activity.OrderPlacedActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,6 +41,7 @@ import java.util.List;
 public class CartFragment extends Fragment {
 
     CartViewModel cartViewModel;
+    OrderViewModel orderViewModel;
     List<CartModel> cartModelList = new ArrayList<>();
 
     public CartFragment() {
@@ -52,6 +57,7 @@ public class CartFragment extends Fragment {
         MaterialButton btnProceed = view.findViewById(R.id.btnProceed);
         TextView txtTotal = view.findViewById(R.id.txtTotal);
         TextView txtSubTotal = view.findViewById(R.id.txtSubTotal);
+        orderViewModel = new ViewModelProvider(this).get(OrderViewModel.class);
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         ProgressBar progressBar = view.findViewById(R.id.progressBar);
         CartAdapter cartAdapter = new CartAdapter(CartFragment.this, cartModelList);
@@ -60,15 +66,6 @@ public class CartFragment extends Fragment {
         enableSwipeToDeleteAndUndo(cartAdapter, cartRecycler);
         MyPreferences myPreferences = MyPreferences.getInstance(getContext());
         cartViewModel.getCart(myPreferences.getUserId());
-
-        btnProceed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext().getApplicationContext(), CheckOutActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getContext().startActivity(intent);
-            }
-        });
 
         cartViewModel.getProgressData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
@@ -121,6 +118,36 @@ public class CartFragment extends Fragment {
                 }
             }
         });
+
+        orderViewModel.getProgressData().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                progressBar.setVisibility(integer);
+            }
+        });
+
+        orderViewModel.getOrderData().observe(getViewLifecycleOwner(), new Observer<PlaceOrder>() {
+            @Override
+            public void onChanged(PlaceOrder placeOrder) {
+                if (placeOrder != null) {
+                    Toast.makeText(getContext(), "" + placeOrder.getMessage(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getContext().getApplicationContext(), OrderPlacedActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(intent);
+                    getActivity().finishAffinity();
+                } else {
+                    Toast.makeText(getContext(), "Something went wrong...!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        btnProceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orderViewModel.placeOrder(myPreferences.getUserId());
+            }
+        });
+
 
         return view;
     }

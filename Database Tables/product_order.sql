@@ -26,6 +26,6 @@ JOIN online_shopping.product_size
 ON online_shopping.product_order.sizeId = online_shopping.product_size.sizeId
 JOIN online_shopping.users
 ON online_shopping.product_order.userId = online_shopping.users.userId 
-WHERE online_shopping.product_order.userId=29;
+WHERE online_shopping.product_order.userId=29 ORDER BY orderId DESC;
 
 SELECT * FROM online_shopping.product_order ORDER BY orderId DESC;
