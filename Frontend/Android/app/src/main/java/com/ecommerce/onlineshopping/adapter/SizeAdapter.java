@@ -45,6 +45,7 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.ViewHolder> {
             }
         });
         if (rowIndex == holder.getAdapterPosition()) {
+            productDetailsActivity.sizeId = productSize.getSizeId();
             holder.cardSize.setBackgroundColor(productDetailsActivity.getColor(R.color.seed));
             holder.txtSize.setTextColor(productDetailsActivity.getColor(R.color.white));
         } else {

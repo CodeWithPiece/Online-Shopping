@@ -27,6 +27,7 @@ import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductSize;
 import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.utils.Constant;
+import com.ecommerce.onlineshopping.utils.MyPreferences;
 import com.ecommerce.onlineshopping.viewmodel.AddToCartViewModel;
 import com.ecommerce.onlineshopping.viewmodel.ProductImageViewModel;
 import com.ecommerce.onlineshopping.viewmodel.ProductSizeViewModel;
@@ -41,8 +42,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ProductImageViewModel productImageViewModel;
     ProductSizeViewModel productSizeViewModel;
     AddToCartViewModel addToCartViewModel;
-    MaterialCardView cardAdd;
     public ImageView imgProduct;
+    Product product;
+    public int sizeId;
     List<ProductImage> productImageList = new ArrayList<>();
     List<ProductSize> productSizeList = new ArrayList<>();
 
@@ -61,6 +63,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         RecyclerView imageRecycler = findViewById(R.id.imageRecycler);
         RecyclerView sizeRecycler = findViewById(R.id.sizeRecycler);
         ProgressBar progressBar = findViewById(R.id.progressBar);
+        MaterialCardView cardAdd = findViewById(R.id.cardAdd);
         productImageViewModel = new ViewModelProvider(this).get(ProductImageViewModel.class);
         productSizeViewModel = new ViewModelProvider(this).get(ProductSizeViewModel.class);
         addToCartViewModel = new ViewModelProvider(this).get(AddToCartViewModel.class);
@@ -73,10 +76,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if (bundle != null) {
-            Product product = (Product) bundle.getSerializable("product");
-            Glide.with(ProductDetailsActivity.this)
-                    .load(Constant.IMAGE_URL + product.getProductImage())
-                    .into(imgProduct);
+            product = (Product) bundle.getSerializable("product");
+            Glide.with(ProductDetailsActivity.this).load(Constant.IMAGE_URL + product.getProductImage()).into(imgProduct);
             txtProductName.setText(product.getProductName());
             txtProductDesc.setText(product.getProductDesc());
             txtRating.setText(product.getProductRating() + " rating");
@@ -142,10 +143,22 @@ public class ProductDetailsActivity extends AppCompatActivity {
             @Override
             public void onChanged(AddToCartRequest addToCartRequest) {
                 if (addToCartRequest != null) {
-
+                    Toast.makeText(ProductDetailsActivity.this, "" + addToCartRequest.getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ProductDetailsActivity.this, "Something went wrong...!!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        cardAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int userId = MyPreferences.getInstance(ProductDetailsActivity.this).getUserId();
+                int productId = product.getProductId();
+                Log.e("USER ID", userId + "");
+                Log.e("PRODUCT ID", productId + "");
+                Log.e("SIZE ID", sizeId + "");
+                addToCartViewModel.addToCart(userId, productId, sizeId);
             }
         });
 
