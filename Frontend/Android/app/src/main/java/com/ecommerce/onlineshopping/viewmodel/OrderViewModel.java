@@ -14,6 +14,7 @@ import com.ecommerce.onlineshopping.callback.PlaceOrderCallback;
 import com.ecommerce.onlineshopping.callback.UpdateCartCallback;
 import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.DeleteCart;
+import com.ecommerce.onlineshopping.model.OrderRequest;
 import com.ecommerce.onlineshopping.model.PlaceOrder;
 import com.ecommerce.onlineshopping.model.UpdateCart;
 import com.ecommerce.onlineshopping.repository.ShoppingRepository;
@@ -22,6 +23,7 @@ public class OrderViewModel extends AndroidViewModel {
 
     private final ShoppingRepository shoppingRepository;
     private final MutableLiveData<PlaceOrder> mutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<OrderRequest> orderLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> progressLiveData = new MutableLiveData<>();
 
     public OrderViewModel(@NonNull Application application) {
@@ -48,6 +50,9 @@ public class OrderViewModel extends AndroidViewModel {
 
     public LiveData<PlaceOrder> getOrderData() {
         return mutableLiveData;
+    }
+    public LiveData<OrderRequest> getOrderLiveData() {
+        return orderLiveData;
     }
 
     public LiveData<Integer> getProgressData() {

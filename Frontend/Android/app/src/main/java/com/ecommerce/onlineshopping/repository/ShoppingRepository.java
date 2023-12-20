@@ -13,6 +13,7 @@ import com.ecommerce.onlineshopping.callback.CartCallback;
 import com.ecommerce.onlineshopping.callback.CategoryCallback;
 import com.ecommerce.onlineshopping.callback.DeleteCartCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
+import com.ecommerce.onlineshopping.callback.OrderCallback;
 import com.ecommerce.onlineshopping.callback.PlaceOrderCallback;
 import com.ecommerce.onlineshopping.callback.ProductCallback;
 import com.ecommerce.onlineshopping.callback.ProductImageCallback;
@@ -25,6 +26,7 @@ import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.DeleteCart;
 import com.ecommerce.onlineshopping.model.LoginRequest;
+import com.ecommerce.onlineshopping.model.OrderRequest;
 import com.ecommerce.onlineshopping.model.PlaceOrder;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
@@ -306,6 +308,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<PlaceOrder> call, Throwable t) {
                 placeOrderCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void getOrder(int userId, OrderCallback orderCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<OrderRequest> call = api.getOrder(userId);
+        call.enqueue(new Callback<OrderRequest>() {
+            @Override
+            public void onResponse(Call<OrderRequest> call, Response<OrderRequest> response) {
+                if (response.isSuccessful()) {
+                    OrderRequest orderRequest = response.body();
+                    orderCallback.onResponse(orderRequest);
+                } else {
+                    orderCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrderRequest> call, Throwable t) {
+                orderCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });

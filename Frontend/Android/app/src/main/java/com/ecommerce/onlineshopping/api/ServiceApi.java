@@ -5,6 +5,7 @@ import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.DeleteCart;
 import com.ecommerce.onlineshopping.model.LoginRequest;
+import com.ecommerce.onlineshopping.model.OrderRequest;
 import com.ecommerce.onlineshopping.model.PlaceOrder;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
@@ -78,6 +79,10 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST("order/create")
     Call<PlaceOrder> placeOrder(@Field("userId") int userId);
+
+    @FormUrlEncoded
+    @POST("order/get")
+    Call<OrderRequest> getOrder(@Field("userId") int userId);
 
 }
 
