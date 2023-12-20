@@ -31,3 +31,5 @@ WHERE online_shopping.users.userId=29;
 UPDATE online_shopping.cart SET productCount=2, updatedAt=CURRENT_TIMESTAMP() WHERE cartId=1;
 DELETE FROM online_shopping.cart WHERE cartId = 2;
 
+SELECT * FROM online_shopping.cart WHERE createdAt LIKE "2023-12-20%";
+
