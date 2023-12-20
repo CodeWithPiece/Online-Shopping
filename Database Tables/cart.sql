@@ -19,7 +19,7 @@ SELECT * FROM online_shopping.cart;
 SELECT online_shopping.cart.cartId, online_shopping.cart.productCount, online_shopping.product_size.sizeName, 
 online_shopping.product.productId, online_shopping.product.productName, online_shopping.product.productDesc, 
 online_shopping.product.productImage, online_shopping.product.productPrice, online_shopping.product.productRating, 
-online_shopping.product.catId, online_shopping.product.updatedAt, online_shopping.product.createdAt 
+online_shopping.product.catId, online_shopping.cart.updatedAt, online_shopping.cart.createdAt 
 FROM online_shopping.cart JOIN online_shopping.product
 ON online_shopping.cart.productId = online_shopping.product.productId
 JOIN online_shopping.product_size
