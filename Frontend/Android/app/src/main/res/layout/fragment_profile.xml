@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
+                    android:visibility="gone"
                     app:cardBackgroundColor="@color/seed"
                     app:cardCornerRadius="100dp"
                     app:strokeColor="@color/background"
@@ -64,6 +65,7 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/txtCustomerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -71,6 +73,15 @@
                 android:text="Customer Name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtCustomerEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/fabulous"
+                android:text="cutomer@gmail.com"
+                android:textColor="@color/grey"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -182,6 +193,7 @@
                 app:dividerColor="@color/grey_light" />
 
             <RelativeLayout
+                android:id="@+id/logoutLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
