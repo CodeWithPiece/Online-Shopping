@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.ecommerce.onlineshopping.api.ApiClient;
 import com.ecommerce.onlineshopping.api.ServiceApi;
 import com.ecommerce.onlineshopping.callback.AddToCartCallback;
+import com.ecommerce.onlineshopping.callback.CartCallback;
 import com.ecommerce.onlineshopping.callback.CategoryCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
 import com.ecommerce.onlineshopping.callback.ProductCallback;
@@ -17,6 +18,7 @@ import com.ecommerce.onlineshopping.callback.ProductSizeCallback;
 import com.ecommerce.onlineshopping.callback.RegisterCallback;
 import com.ecommerce.onlineshopping.callback.TrendingProductCallback;
 import com.ecommerce.onlineshopping.model.AddToCartRequest;
+import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
@@ -210,6 +212,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<AddToCartRequest> call, Throwable t) {
                 addToCartCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void getCart(int userId, CartCallback cartCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<CartRequest> call = api.getCart(userId);
+        call.enqueue(new Callback<CartRequest>() {
+            @Override
+            public void onResponse(Call<CartRequest> call, Response<CartRequest> response) {
+                if (response.isSuccessful()) {
+                    CartRequest cartRequest = response.body();
+                    cartCallback.onResponse(cartRequest);
+                } else {
+                    cartCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CartRequest> call, Throwable t) {
+                cartCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });

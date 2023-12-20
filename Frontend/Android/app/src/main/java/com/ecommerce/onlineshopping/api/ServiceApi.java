@@ -1,6 +1,7 @@
 package com.ecommerce.onlineshopping.api;
 
 import com.ecommerce.onlineshopping.model.AddToCartRequest;
+import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
@@ -57,6 +58,10 @@ public interface ServiceApi {
     Call<AddToCartRequest> addToCart(@Field("userId") int userId,
                                      @Field("productId") int productId,
                                      @Field("sizeId") int sizeId);
+
+    @FormUrlEncoded
+    @POST("cart/get")
+    Call<CartRequest> getCart(@Field("userId") int userId);
 
 }
 

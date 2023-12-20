@@ -144,6 +144,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onChanged(AddToCartRequest addToCartRequest) {
                 if (addToCartRequest != null) {
                     Toast.makeText(ProductDetailsActivity.this, "" + addToCartRequest.getMessage(), Toast.LENGTH_SHORT).show();
+                    getOnBackPressedDispatcher().onBackPressed();
                 } else {
                     Toast.makeText(ProductDetailsActivity.this, "Something went wrong...!!", Toast.LENGTH_SHORT).show();
                 }
