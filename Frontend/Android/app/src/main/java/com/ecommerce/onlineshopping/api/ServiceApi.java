@@ -51,6 +51,12 @@ public interface ServiceApi {
     @GET("product/random")
     Call<TrendingProductRequest> getTrendingProducts();
 
+    @FormUrlEncoded
+    @POST("cart/add")
+    Call<ProductSizeRequest> addToCart(@Field("userId") int userId,
+                                       @Field("productId") int productId,
+                                       @Field("sizeId") int sizeId);
+
 }
 
 

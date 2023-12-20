@@ -11,7 +11,8 @@
     <item
         android:id="@+id/favourite"
         android:icon="@drawable/favourite_selector"
-        android:title="Favourite" />
+        android:title="Favourite"
+        android:visible="false" />
     <item
         android:id="@+id/cart"
         android:icon="@drawable/cart_selector"
