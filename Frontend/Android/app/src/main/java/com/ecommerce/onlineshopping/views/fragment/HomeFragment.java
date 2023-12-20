@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
                     productList.addAll(trendingProductRequest.getProduct());
                     trendingClothesAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(getContext(), "Categories not found...!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Products not found...!!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

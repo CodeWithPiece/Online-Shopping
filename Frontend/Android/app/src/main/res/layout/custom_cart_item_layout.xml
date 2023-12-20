@@ -19,6 +19,7 @@
         android:padding="10dp">
 
         <ImageView
+            android:id="@+id/imgProduct"
             android:layout_width="110dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
@@ -32,15 +33,18 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/txtProductName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fabulous"
                 android:singleLine="true"
                 android:text="Clothes Name"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtSize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/fabulous"
@@ -53,6 +57,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/txtAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -69,6 +74,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardMinus"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:clickable="true"
@@ -85,6 +91,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <TextView
+                        android:id="@+id/txtCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -95,6 +102,7 @@
                         android:textStyle="bold" />
 
                     <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardPlus"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:clickable="true"
