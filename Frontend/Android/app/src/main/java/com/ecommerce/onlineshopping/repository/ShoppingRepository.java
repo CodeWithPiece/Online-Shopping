@@ -11,6 +11,7 @@ import com.ecommerce.onlineshopping.api.ServiceApi;
 import com.ecommerce.onlineshopping.callback.AddToCartCallback;
 import com.ecommerce.onlineshopping.callback.CartCallback;
 import com.ecommerce.onlineshopping.callback.CategoryCallback;
+import com.ecommerce.onlineshopping.callback.DeleteCartCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
 import com.ecommerce.onlineshopping.callback.ProductCallback;
 import com.ecommerce.onlineshopping.callback.ProductImageCallback;
@@ -21,6 +22,7 @@ import com.ecommerce.onlineshopping.callback.UpdateCartCallback;
 import com.ecommerce.onlineshopping.model.AddToCartRequest;
 import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
+import com.ecommerce.onlineshopping.model.DeleteCart;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
@@ -258,6 +260,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<UpdateCart> call, Throwable t) {
                 updateCartCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void deleteCart(int cartId, DeleteCartCallback deleteCartCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<DeleteCart> call = api.deleteCart(cartId);
+        call.enqueue(new Callback<DeleteCart>() {
+            @Override
+            public void onResponse(Call<DeleteCart> call, Response<DeleteCart> response) {
+                if (response.isSuccessful()) {
+                    DeleteCart deleteCart = response.body();
+                    deleteCartCallback.onResponse(deleteCart);
+                } else {
+                    deleteCartCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DeleteCart> call, Throwable t) {
+                deleteCartCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });

@@ -3,6 +3,7 @@ package com.ecommerce.onlineshopping.api;
 import com.ecommerce.onlineshopping.model.AddToCartRequest;
 import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
+import com.ecommerce.onlineshopping.model.DeleteCart;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductRequest;
@@ -68,6 +69,10 @@ public interface ServiceApi {
     @POST("cart/update")
     Call<UpdateCart> updateCart(@Field("productCount") int productCount,
                                 @Field("cartId") int cartId);
+
+    @FormUrlEncoded
+    @POST("cart/delete")
+    Call<DeleteCart> deleteCart(@Field("cartId") int cartId);
 
 }
 

@@ -21,6 +21,7 @@ import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.adapter.CartAdapter;
 import com.ecommerce.onlineshopping.model.CartModel;
 import com.ecommerce.onlineshopping.model.CartRequest;
+import com.ecommerce.onlineshopping.model.DeleteCart;
 import com.ecommerce.onlineshopping.model.UpdateCart;
 import com.ecommerce.onlineshopping.utils.MyPreferences;
 import com.ecommerce.onlineshopping.utils.SwipeToDeleteCallback;
@@ -100,6 +101,18 @@ public class CartFragment extends Fragment {
             }
         });
 
+        cartViewModel.deleteCartData().observe(getViewLifecycleOwner(), new Observer<DeleteCart>() {
+            @Override
+            public void onChanged(DeleteCart deleteCart) {
+                if (deleteCart != null) {
+                    Toast.makeText(getContext(), "" + deleteCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    cartViewModel.getCart(myPreferences.getUserId());
+                } else {
+                    Toast.makeText(getContext(), "Something went wrong...!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -108,8 +121,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 CartModel cartModel = cartModelList.get(viewHolder.getAdapterPosition());
-                Toast.makeText(getContext(), "" + cartModel.getProductName(), Toast.LENGTH_SHORT).show();
-                //mAdapter.removeItem(position);
+                deleteCart(cartModel.getCartId());
             }
         };
 
@@ -119,6 +131,10 @@ public class CartFragment extends Fragment {
 
     public void updateCart(int productCount, int cartId) {
         cartViewModel.updateCart(productCount, cartId);
+    }
+
+    public void deleteCart(int cartId) {
+        cartViewModel.deleteCart(cartId);
     }
 
 }

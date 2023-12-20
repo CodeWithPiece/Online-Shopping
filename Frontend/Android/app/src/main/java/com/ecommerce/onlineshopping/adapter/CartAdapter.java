@@ -51,10 +51,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             public void onClick(View v) {
                 int count = cartModel.getProductCount();
                 if (count > 1) {
-                    count++;
+                    count--;
                     cartFragment.updateCart(count, cartModel.getCartId());
                 } else {
                     // delete cart
+                    cartFragment.deleteCart(cartModel.getCartId());
                 }
             }
         });
