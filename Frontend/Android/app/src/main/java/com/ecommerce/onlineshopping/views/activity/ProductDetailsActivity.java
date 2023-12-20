@@ -20,15 +20,18 @@ import com.bumptech.glide.Glide;
 import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.adapter.ImageSliderAdapter;
 import com.ecommerce.onlineshopping.adapter.SizeAdapter;
+import com.ecommerce.onlineshopping.model.AddToCartRequest;
 import com.ecommerce.onlineshopping.model.Product;
 import com.ecommerce.onlineshopping.model.ProductImage;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
 import com.ecommerce.onlineshopping.model.ProductSize;
 import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.utils.Constant;
+import com.ecommerce.onlineshopping.viewmodel.AddToCartViewModel;
 import com.ecommerce.onlineshopping.viewmodel.ProductImageViewModel;
 import com.ecommerce.onlineshopping.viewmodel.ProductSizeViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     ProductImageViewModel productImageViewModel;
     ProductSizeViewModel productSizeViewModel;
+    AddToCartViewModel addToCartViewModel;
+    MaterialCardView cardAdd;
     public ImageView imgProduct;
     List<ProductImage> productImageList = new ArrayList<>();
     List<ProductSize> productSizeList = new ArrayList<>();
@@ -58,6 +63,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ProgressBar progressBar = findViewById(R.id.progressBar);
         productImageViewModel = new ViewModelProvider(this).get(ProductImageViewModel.class);
         productSizeViewModel = new ViewModelProvider(this).get(ProductSizeViewModel.class);
+        addToCartViewModel = new ViewModelProvider(this).get(AddToCartViewModel.class);
         ImageSliderAdapter imageSliderAdapter = new ImageSliderAdapter(ProductDetailsActivity.this, productImageList);
         SizeAdapter sizeAdapter = new SizeAdapter(ProductDetailsActivity.this, productSizeList);
         imageRecycler.setLayoutManager(new LinearLayoutManager(ProductDetailsActivity.this, LinearLayoutManager.HORIZONTAL, false));
@@ -101,6 +107,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
+        addToCartViewModel.getProgressData().observe(ProductDetailsActivity.this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                progressBar.setVisibility(integer);
+            }
+        });
+
         productImageViewModel.getProductImageData().observe(ProductDetailsActivity.this, new Observer<ProductImageRequest>() {
             @Override
             public void onChanged(ProductImageRequest productImageRequest) {
@@ -121,6 +134,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     sizeAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(ProductDetailsActivity.this, "Product size not found...!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        addToCartViewModel.getAddToCartData().observe(ProductDetailsActivity.this, new Observer<AddToCartRequest>() {
+            @Override
+            public void onChanged(AddToCartRequest addToCartRequest) {
+                if (addToCartRequest != null) {
+
+                } else {
+                    Toast.makeText(ProductDetailsActivity.this, "Something went wrong...!!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ecommerce.onlineshopping.api.ApiClient;
 import com.ecommerce.onlineshopping.api.ServiceApi;
+import com.ecommerce.onlineshopping.callback.AddToCartCallback;
 import com.ecommerce.onlineshopping.callback.CategoryCallback;
 import com.ecommerce.onlineshopping.callback.LoginCallback;
 import com.ecommerce.onlineshopping.callback.ProductCallback;
@@ -15,6 +16,7 @@ import com.ecommerce.onlineshopping.callback.ProductImageCallback;
 import com.ecommerce.onlineshopping.callback.ProductSizeCallback;
 import com.ecommerce.onlineshopping.callback.RegisterCallback;
 import com.ecommerce.onlineshopping.callback.TrendingProductCallback;
+import com.ecommerce.onlineshopping.model.AddToCartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
 import com.ecommerce.onlineshopping.model.LoginRequest;
 import com.ecommerce.onlineshopping.model.ProductImageRequest;
@@ -186,6 +188,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<TrendingProductRequest> call, Throwable t) {
                 trendingProductCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void addToCart(int userId, int productId, int sizeId, AddToCartCallback addToCartCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<AddToCartRequest> call = api.addToCart(userId, productId, sizeId);
+        call.enqueue(new Callback<AddToCartRequest>() {
+            @Override
+            public void onResponse(Call<AddToCartRequest> call, Response<AddToCartRequest> response) {
+                if (response.isSuccessful()) {
+                    AddToCartRequest addToCartRequest = response.body();
+                    addToCartCallback.onResponse(addToCartRequest);
+                } else {
+                    addToCartCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddToCartRequest> call, Throwable t) {
+                addToCartCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });
