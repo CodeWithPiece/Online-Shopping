@@ -26,10 +26,10 @@ JOIN online_shopping.product_size
 ON online_shopping.cart.sizeId = online_shopping.product_size.sizeId 
 JOIN online_shopping.users
 ON online_shopping.cart.userId = online_shopping.users.userId 
-WHERE online_shopping.users.userId=29;
+WHERE online_shopping.cart.userId=29;
 
 UPDATE online_shopping.cart SET productCount=2, updatedAt=CURRENT_TIMESTAMP() WHERE cartId=1;
-DELETE FROM online_shopping.cart WHERE cartId = 2;
+DELETE FROM online_shopping.cart WHERE online_shopping.cart.userId = 29;
 
 SELECT * FROM online_shopping.cart WHERE createdAt LIKE "2023-12-20%";
 
