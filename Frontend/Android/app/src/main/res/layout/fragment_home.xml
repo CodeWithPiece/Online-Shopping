@@ -15,8 +15,6 @@
         android:elevation="5dp"
         android:theme="@style/ToolbarTheme"
         app:menu="@menu/notification_menu"
-        app:navigationIcon="@drawable/menu"
-        app:navigationIconTint="@color/white"
         app:subtitle=""
         app:subtitleTextAppearance="@style/TextAppearance.Material3.BodySmall"
         app:subtitleTextColor="@color/white"

@@ -144,7 +144,11 @@ public class CartFragment extends Fragment {
         btnProceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                orderViewModel.placeOrder(myPreferences.getUserId());
+                if (!cartModelList.isEmpty()) {
+                    orderViewModel.placeOrder(myPreferences.getUserId());
+                } else {
+                    Toast.makeText(getContext(), "Cart is empty...!!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
