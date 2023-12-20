@@ -17,6 +17,7 @@ import com.ecommerce.onlineshopping.callback.ProductImageCallback;
 import com.ecommerce.onlineshopping.callback.ProductSizeCallback;
 import com.ecommerce.onlineshopping.callback.RegisterCallback;
 import com.ecommerce.onlineshopping.callback.TrendingProductCallback;
+import com.ecommerce.onlineshopping.callback.UpdateCartCallback;
 import com.ecommerce.onlineshopping.model.AddToCartRequest;
 import com.ecommerce.onlineshopping.model.CartRequest;
 import com.ecommerce.onlineshopping.model.CategoryRequest;
@@ -27,6 +28,7 @@ import com.ecommerce.onlineshopping.model.ProductSize;
 import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 import com.ecommerce.onlineshopping.model.TrendingProductRequest;
+import com.ecommerce.onlineshopping.model.UpdateCart;
 import com.ecommerce.onlineshopping.model.User;
 
 import retrofit2.Call;
@@ -234,6 +236,28 @@ public class ShoppingRepository {
             @Override
             public void onFailure(Call<CartRequest> call, Throwable t) {
                 cartCallback.onFailure(t);
+                Log.e("EXCEPTION", t.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void updateCart(int productCount, int cartId, UpdateCartCallback updateCartCallback) {
+        ServiceApi api = ApiClient.getClient().create(ServiceApi.class);
+        Call<UpdateCart> call = api.updateCart(productCount, cartId);
+        call.enqueue(new Callback<UpdateCart>() {
+            @Override
+            public void onResponse(Call<UpdateCart> call, Response<UpdateCart> response) {
+                if (response.isSuccessful()) {
+                    UpdateCart updateCart = response.body();
+                    updateCartCallback.onResponse(updateCart);
+                } else {
+                    updateCartCallback.onFailure(new Throwable("Response Failure"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateCart> call, Throwable t) {
+                updateCartCallback.onFailure(t);
                 Log.e("EXCEPTION", t.getLocalizedMessage());
             }
         });

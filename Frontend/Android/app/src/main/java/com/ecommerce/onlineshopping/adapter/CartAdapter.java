@@ -46,6 +46,28 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.txtSize.setText("Size: " + cartModel.getSizeName());
         holder.txtAmount.setText("₹" + cartModel.getProductPrice());
         holder.txtCount.setText(cartModel.getProductCount() + "");
+        holder.cardMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count = cartModel.getProductCount();
+                if (count > 1) {
+                    count++;
+                    cartFragment.updateCart(count, cartModel.getCartId());
+                } else {
+                    // delete cart
+                }
+            }
+        });
+
+        holder.cardPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count = cartModel.getProductCount();
+                count++;
+                cartFragment.updateCart(count, cartModel.getCartId());
+            }
+        });
+
     }
 
     @Override

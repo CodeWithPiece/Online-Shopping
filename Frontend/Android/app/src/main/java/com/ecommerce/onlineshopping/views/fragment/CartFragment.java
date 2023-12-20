@@ -21,6 +21,7 @@ import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.adapter.CartAdapter;
 import com.ecommerce.onlineshopping.model.CartModel;
 import com.ecommerce.onlineshopping.model.CartRequest;
+import com.ecommerce.onlineshopping.model.UpdateCart;
 import com.ecommerce.onlineshopping.utils.MyPreferences;
 import com.ecommerce.onlineshopping.utils.SwipeToDeleteCallback;
 import com.ecommerce.onlineshopping.viewmodel.CartViewModel;
@@ -53,7 +54,8 @@ public class CartFragment extends Fragment {
         cartRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         cartRecycler.setAdapter(cartAdapter);
         enableSwipeToDeleteAndUndo(cartAdapter, cartRecycler);
-        cartViewModel.getCart(MyPreferences.getInstance(getContext()).getUserId());
+        MyPreferences myPreferences = MyPreferences.getInstance(getContext());
+        cartViewModel.getCart(myPreferences.getUserId());
 
         btnProceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +88,18 @@ public class CartFragment extends Fragment {
             }
         });
 
+        cartViewModel.updateCartData().observe(getViewLifecycleOwner(), new Observer<UpdateCart>() {
+            @Override
+            public void onChanged(UpdateCart updateCart) {
+                if (updateCart != null) {
+                    Toast.makeText(getContext(), "" + updateCart.getMessage(), Toast.LENGTH_SHORT).show();
+                    cartViewModel.getCart(myPreferences.getUserId());
+                } else {
+                    Toast.makeText(getContext(), "Something went wrong...!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -101,6 +115,10 @@ public class CartFragment extends Fragment {
 
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
         itemTouchhelper.attachToRecyclerView(cartRecycler);
+    }
+
+    public void updateCart(int productCount, int cartId) {
+        cartViewModel.updateCart(productCount, cartId);
     }
 
 }

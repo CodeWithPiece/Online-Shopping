@@ -9,6 +9,7 @@ import com.ecommerce.onlineshopping.model.ProductRequest;
 import com.ecommerce.onlineshopping.model.ProductSizeRequest;
 import com.ecommerce.onlineshopping.model.RegisterUser;
 import com.ecommerce.onlineshopping.model.TrendingProductRequest;
+import com.ecommerce.onlineshopping.model.UpdateCart;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -62,6 +63,11 @@ public interface ServiceApi {
     @FormUrlEncoded
     @POST("cart/get")
     Call<CartRequest> getCart(@Field("userId") int userId);
+
+    @FormUrlEncoded
+    @POST("cart/update")
+    Call<UpdateCart> updateCart(@Field("productCount") int productCount,
+                                @Field("cartId") int cartId);
 
 }
 
