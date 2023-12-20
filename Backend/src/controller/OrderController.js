@@ -21,7 +21,6 @@ exports.getOrderByUserId = (req, res) => {
   let userId = req.body.userId;
   orderModel.getOrderByUserId(userId, (err, order) => {
     if (err) {
-      console.log(err);
       return res.status(500).json({
         status: false,
         message: "Internal server error",
