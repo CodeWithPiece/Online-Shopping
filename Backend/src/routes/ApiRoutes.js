@@ -7,6 +7,7 @@ const ProductController = require("../controller/ProductController.js");
 const ProductImageController = require("../controller/ProductImageController.js");
 const ProductSizeController = require("../controller/ProductSizeController.js");
 const CartController = require("../controller/CartController.js");
+const OrderController = require("../controller/OrderController.js");
 
 router.post("/user/create", Validate.registerValidate, UserController.saveUser);
 router.post("/user/update", Validate.updateValidate, UserController.updateUser);
@@ -44,5 +45,8 @@ router.post("/cart/add", Validate.addToCartValidate, CartController.addToCart);
 router.post("/cart/update", Validate.updateCartValidate, CartController.updateCart);
 router.post("/cart/get", Validate.getCartValidate, CartController.getCartByUserId);
 router.post("/cart/delete", Validate.deleteCartValidate, CartController.deleteCartById);
+
+router.post("/order/create", Validate.placeOrderValidate, OrderController.placeOrder);
+router.post("/order/get", Validate.placeOrderValidate, OrderController.getOrderByUserId);
 
 module.exports = router;

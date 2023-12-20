@@ -14,7 +14,7 @@ CREATE TABLE product_order (
 
 DROP TABLE online_shopping.product_order;
 INSERT INTO online_shopping.product_order (productCount, userId, productId, sizeId) 
-SELECT productCount, userId, productId, sizeId FROM online_shopping.cart;
+SELECT productCount, userId, productId, sizeId FROM online_shopping.cart WHERE online_shopping.cart.userId = 29;
 
 SELECT online_shopping.product_order.orderId, online_shopping.product_order.productCount, online_shopping.product_size.sizeName, 
 online_shopping.product.productId, online_shopping.product.productName, online_shopping.product.productDesc, 

@@ -2,7 +2,7 @@ const connection = require("../../db_connection/DbConnection.js");
 
 let Cart = function (model) {
   this.cartId = model.sizeId;
-  this.productCount = model.sizeName;
+  this.productCount = model.productCount;
   this.userId = model.productId;
   this.productId = model.productId;
   this.sizeId = model.sizeId;
