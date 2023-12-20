@@ -9,8 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.model.CartModel;
+import com.ecommerce.onlineshopping.utils.Constant;
 import com.ecommerce.onlineshopping.views.fragment.CartFragment;
 import com.google.android.material.card.MaterialCardView;
 
@@ -36,7 +38,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        CartModel cartModel = cartModelList.get(holder.getAdapterPosition());
+        Glide.with(cartFragment)
+                .load(Constant.IMAGE_URL + cartModel.getProductImage())
+                .into(holder.imgProduct);
+        holder.txtProductName.setText(cartModel.getProductName());
+        holder.txtSize.setText("Size: " + cartModel.getSizeName());
+        holder.txtAmount.setText("₹" + cartModel.getProductPrice());
+        holder.txtCount.setText(cartModel.getProductCount() + "");
     }
 
     @Override

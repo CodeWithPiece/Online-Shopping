@@ -93,7 +93,8 @@ public class CartFragment extends Fragment {
         SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(getContext()) {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                final int position = viewHolder.getAdapterPosition();
+                CartModel cartModel = cartModelList.get(viewHolder.getAdapterPosition());
+                Toast.makeText(getContext(), "" + cartModel.getProductName(), Toast.LENGTH_SHORT).show();
                 //mAdapter.removeItem(position);
             }
         };
