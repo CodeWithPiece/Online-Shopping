@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ecommerce.onlineshopping.R;
@@ -49,6 +50,8 @@ public class CartFragment extends Fragment {
 
         RecyclerView cartRecycler = view.findViewById(R.id.cartRecycler);
         MaterialButton btnProceed = view.findViewById(R.id.btnProceed);
+        TextView txtTotal = view.findViewById(R.id.txtTotal);
+        TextView txtSubTotal = view.findViewById(R.id.txtSubTotal);
         cartViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         ProgressBar progressBar = view.findViewById(R.id.progressBar);
         CartAdapter cartAdapter = new CartAdapter(CartFragment.this, cartModelList);
@@ -81,6 +84,12 @@ public class CartFragment extends Fragment {
                     cartModelList.clear();
                     cartModelList.addAll(cartRequest.getCart());
                     cartAdapter.notifyDataSetChanged();
+                    double amount = 0.0;
+                    for (CartModel cartModel : cartModelList) {
+                        amount = amount + Double.parseDouble(cartModel.getProductPrice());
+                    }
+                    txtSubTotal.setText("₹" + amount);
+                    txtTotal.setText("₹" + amount);
                 } else {
                     cartModelList.clear();
                     cartAdapter.notifyDataSetChanged();
