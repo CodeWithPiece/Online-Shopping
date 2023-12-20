@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
         trendingRecycler.setAdapter(trendingClothesAdapter);
         slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
         slider.setSliderAdapter(bannerAdapter);
-        slider.setScrollTimeInSec(3);
+        slider.setScrollTimeInSec(2);
         slider.setAutoCycle(true);
         slider.startAutoCycle();
 

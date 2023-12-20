@@ -88,8 +88,8 @@ public class CartFragment extends Fragment {
                     for (CartModel cartModel : cartModelList) {
                         amount = amount + Double.parseDouble(cartModel.getProductPrice());
                     }
-                    txtSubTotal.setText("₹" + amount);
-                    txtTotal.setText("₹" + amount);
+                    txtSubTotal.setText("₹ " + amount);
+                    txtTotal.setText("₹ " + amount);
                 } else {
                     cartModelList.clear();
                     cartAdapter.notifyDataSetChanged();
