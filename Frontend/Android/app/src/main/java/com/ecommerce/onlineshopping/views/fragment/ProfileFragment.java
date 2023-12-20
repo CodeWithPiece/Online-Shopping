@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.ecommerce.onlineshopping.R;
 import com.ecommerce.onlineshopping.utils.MyPreferences;
 import com.ecommerce.onlineshopping.views.activity.MainActivity;
+import com.ecommerce.onlineshopping.views.activity.MyOrderActivity;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class ProfileFragment extends Fragment {
@@ -30,9 +31,17 @@ public class ProfileFragment extends Fragment {
         TextView txtCustomerName = view.findViewById(R.id.txtCustomerName);
         TextView txtCustomerEmail = view.findViewById(R.id.txtCustomerEmail);
         RelativeLayout logoutLayout = view.findViewById(R.id.logoutLayout);
+        RelativeLayout layoutOrder = view.findViewById(R.id.layoutOrder);
         MyPreferences myPreferences = MyPreferences.getInstance(getContext());
         txtCustomerName.setText(myPreferences.getUserName());
         txtCustomerEmail.setText(myPreferences.getUserEmail());
+
+        layoutOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext().getApplicationContext(), MyOrderActivity.class));
+            }
+        });
 
         logoutLayout.setOnClickListener(new View.OnClickListener() {
             @Override

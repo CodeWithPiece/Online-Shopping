@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.ecommerce.onlineshopping.callback.CartCallback;
 import com.ecommerce.onlineshopping.callback.DeleteCartCallback;
+import com.ecommerce.onlineshopping.callback.OrderCallback;
 import com.ecommerce.onlineshopping.callback.PlaceOrderCallback;
 import com.ecommerce.onlineshopping.callback.UpdateCartCallback;
 import com.ecommerce.onlineshopping.model.CartRequest;
@@ -48,9 +49,27 @@ public class OrderViewModel extends AndroidViewModel {
         });
     }
 
+    public void getOrder(int userId) {
+        progressLiveData.setValue(View.VISIBLE);
+        shoppingRepository.getOrder(userId, new OrderCallback() {
+            @Override
+            public void onResponse(OrderRequest orderRequest) {
+                progressLiveData.setValue(View.GONE);
+                orderLiveData.setValue(orderRequest);
+            }
+
+            @Override
+            public void onFailure(Throwable throwable) {
+                progressLiveData.setValue(View.GONE);
+                orderLiveData.setValue(null);
+            }
+        });
+    }
+
     public LiveData<PlaceOrder> getOrderData() {
         return mutableLiveData;
     }
+
     public LiveData<OrderRequest> getOrderLiveData() {
         return orderLiveData;
     }
